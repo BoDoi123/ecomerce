@@ -35,7 +35,7 @@ const HeaderComponent = () => {
 					}}
 				>
 					<WrapperHeaderAccount>
-						<UserOutlined style={{ fontSize: "30px" }} />
+						<UserOutlined style={{ fontSize: "3rem" }} />
 						<div>
 							<span>Đăng nhập / Đăng ký</span>
 							<div>
@@ -46,7 +46,7 @@ const HeaderComponent = () => {
 					</WrapperHeaderAccount>
 
 					<WrapperTextHeaderCart>
-						<ShoppingCartOutlined style={{ fontSize: "30px" }} />
+						<ShoppingCartOutlined style={{ fontSize: "3rem" }} />
 						<span>Giỏ hàng</span>
 					</WrapperTextHeaderCart>
 				</Col>

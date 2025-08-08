@@ -6,7 +6,9 @@ import slider2 from "../../assets/imgs/slider2.webp";
 import slider3 from "../../assets/imgs/slider3.webp";
 import slider4 from "../../assets/imgs/slider4.webp";
 import slider5 from "../../assets/imgs/slider5.webp";
+import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import CardComponent from "../../components/CardComponent/CardComponent";
+import NavBarComponent from "../../components/NavBarComponent/NavBarComponent";
 
 const HomePage = () => {
 	const arr = ["TV", "Tu lanh", "Lap top"];
@@ -42,7 +44,28 @@ const HomePage = () => {
 					}}
 				>
 					<CardComponent />
+					<CardComponent />
+					<CardComponent />
+					<CardComponent />
+					<CardComponent />
+					<CardComponent />
+					<CardComponent />
+					<CardComponent />
 				</div>
+
+				<ButtonComponent
+					textButton="Xem thêm"
+					type="outline"
+					styleButton={{
+						border: "1px solid rgb(11, 116, 229)",
+						color: "rgb(11, 116, 229)",
+						height: "38px",
+						width: "240px",
+						borderRadius: "4px",
+					}}
+				/>
+
+				{/* <NavBarComponent /> */}
 			</div>
 		</>
 	);
