@@ -17,7 +17,7 @@ const HomePage = () => {
 
 	return (
 		<>
-			<div style={{ padding: "0 120px" }}>
+			<div style={{ width: "1270px", margin: "0 auto" }}>
 				<WrapperTypeProduct>
 					{arr.map((item) => {
 						return <TypeProduct name={item} key={item} />;
@@ -26,49 +26,59 @@ const HomePage = () => {
 			</div>
 
 			<div
-				id="container"
-				style={{
-					backgroundColor: "#efefef",
-					padding: "0 120px",
-					height: "1000px",
-				}}
+				className="body"
+				style={{ width: "100%", backgroundColor: "#efefef" }}
 			>
-				<SliderComponent
-					arrImages={[slider1, slider2, slider3, slider4, slider5]}
-				/>
-
-				<WrapperProducts>
-					<CardComponent />
-					<CardComponent />
-					<CardComponent />
-					<CardComponent />
-					<CardComponent />
-					<CardComponent />
-					<CardComponent />
-					<CardComponent />
-				</WrapperProducts>
-
 				<div
+					id="container"
 					style={{
-						width: "100%",
-						display: "flex",
-						alignItems: "center",
-						marginTop: "10px",
-						justifyContent: "center",
+						margin: "0 auto",
+						width: "1270px",
+						height: "1000px",
 					}}
 				>
-					<WrapperButtonMore
-						textButton="Xem thêm"
-						type="outline"
-						styleButton={{
-							border: "1px solid rgb(11, 116, 229)",
-							color: "rgb(11, 116, 229)",
-							height: "38px",
-							width: "240px",
-							borderRadius: "4px",
-							fontWeight: "500",
-						}}
+					<SliderComponent
+						arrImages={[
+							slider1,
+							slider2,
+							slider3,
+							slider4,
+							slider5,
+						]}
 					/>
+
+					<WrapperProducts>
+						<CardComponent />
+						<CardComponent />
+						<CardComponent />
+						<CardComponent />
+						<CardComponent />
+						<CardComponent />
+						<CardComponent />
+						<CardComponent />
+					</WrapperProducts>
+
+					<div
+						style={{
+							width: "100%",
+							display: "flex",
+							marginTop: "10px",
+							justifyContent: "center",
+						}}
+					>
+						<WrapperButtonMore
+							textButton="Xem thêm"
+							type="outline"
+							styleButton={{
+								border: "1px solid rgb(11, 116, 229)",
+								color: "rgb(11, 116, 229)",
+								height: "38px",
+								width: "240px",
+								borderRadius: "4px",
+								fontWeight: "500",
+							}}
+						/>
+					</div>
 				</div>
 			</div>
 		</>
