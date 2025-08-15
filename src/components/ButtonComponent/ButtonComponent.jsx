@@ -1,8 +1,22 @@
 import { Button } from "antd";
 
-const ButtonComponent = ({ size, styleButton, textButton, ...rests }) => {
+const ButtonComponent = ({
+	size,
+	styleButton,
+	textButton,
+	disabled,
+	...rests
+}) => {
 	return (
-		<Button size={size} style={styleButton} {...rests}>
+		<Button
+			disabled={disabled}
+			style={{
+				...styleButton,
+				background: disabled ? "#ccc" : styleButton?.background,
+			}}
+			size={size}
+			{...rests}
+		>
 			{textButton}
 		</Button>
 	);

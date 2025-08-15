@@ -9,9 +9,45 @@ import InputForm from "../../components/InputForm/InputForm";
 import imageLogo from "../../assets/imgs/logo-login.png";
 import { Image } from "antd";
 import { useState } from "react";
+import { useNavigate } from "react-router";
+import * as UserService from "../../services/UserService";
+import { useMutationHook } from "../../hooks/useMutationHook";
+import Loading from "../../components/LoadingComponent/Loading";
 
 const SignUpPage = () => {
+	const navigate = useNavigate();
 	const [isShowPassword, setIsShowPassword] = useState(false);
+	const [isShowConfirmPassword, setIsShowConfirmPassword] = useState(false);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [confirmPassword, setConfirmPassword] = useState("");
+
+	const mutation = useMutationHook((data) => UserService.signUpUser(data));
+	const { data, isPending } = mutation;
+
+	const handleNavigateSignIn = () => {
+		navigate("/sign-in");
+	};
+
+	const handleOnChangeEmail = (value) => {
+		setEmail(value);
+	};
+
+	const handleOnChangePassword = (value) => {
+		setPassword(value);
+	};
+
+	const handleOnChangeConfirmPassword = (value) => {
+		setConfirmPassword(value);
+	};
+
+	const handleSignUp = () => {
+		mutation.mutate({
+			email,
+			password,
+			confirmPassword,
+		});
+	};
 
 	return (
 		<div
@@ -46,10 +82,13 @@ const SignUpPage = () => {
 					<InputForm
 						style={{ marginBottom: "10px" }}
 						placeholder="abc@gmail.com"
+						value={email}
+						onChange={handleOnChangeEmail}
 					/>
 
 					<div style={{ position: "relative" }}>
 						<span
+							onClick={() => setIsShowPassword(!isShowPassword)}
 							style={{
 								zIndex: 10,
 								position: "absolute",
@@ -68,11 +107,16 @@ const SignUpPage = () => {
 							style={{ marginBottom: "10px" }}
 							placeholder="password"
 							type={isShowPassword ? "text" : "password"}
+							value={password}
+							onChange={handleOnChangePassword}
 						/>
 					</div>
 
 					<div style={{ position: "relative" }}>
 						<span
+							onClick={() =>
+								setIsShowConfirmPassword(!isShowConfirmPassword)
+							}
 							style={{
 								zIndex: 10,
 								position: "absolute",
@@ -80,7 +124,7 @@ const SignUpPage = () => {
 								right: "8px",
 							}}
 						>
-							{isShowPassword ? (
+							{isShowConfirmPassword ? (
 								<EyeFilled />
 							) : (
 								<EyeInvisibleFilled />
@@ -89,28 +133,43 @@ const SignUpPage = () => {
 
 						<InputForm
 							placeholder="confirm password"
-							type={isShowPassword ? "text" : "password"}
+							type={isShowConfirmPassword ? "text" : "password"}
+							value={confirmPassword}
+							onChange={handleOnChangeConfirmPassword}
 						/>
 					</div>
+					{data?.status === "ERR" && (
+						<span style={{ color: "red" }}>{data?.message}</span>
+					)}
 
-					<ButtonComponent
-						size={40}
-						style={{
-							backgroundColor: "rgb(255, 57, 69)",
-							color: "#fff",
-							fontSize: "1.5rem",
-							fontWeight: "700",
-							height: "48px",
-							width: "100%",
-							border: "none",
-							margin: "26px 0 10px",
-						}}
-						textButton={"Đăng nhập"}
-					></ButtonComponent>
+					<Loading isLoading={isPending}>
+						<ButtonComponent
+							disabled={
+								!email.length ||
+								!password.length ||
+								!confirmPassword.length
+							}
+							onClick={handleSignUp}
+							size={40}
+							styleButton={{
+								background: "rgb(255, 57, 69)",
+								color: "#fff",
+								fontSize: "1.5rem",
+								fontWeight: "700",
+								height: "48px",
+								width: "100%",
+								border: "none",
+								margin: "26px 0 10px",
+							}}
+							textButton={"Đăng ký"}
+						></ButtonComponent>
+					</Loading>
 
 					<p style={{ marginTop: "0" }}>
 						Bạn đã có tài khoản?{" "}
-						<WrapperTextLight>Đăng nhập</WrapperTextLight>
+						<WrapperTextLight onClick={handleNavigateSignIn}>
+							Đăng nhập
+						</WrapperTextLight>
 					</p>
 				</WrapperContainerLeft>
 

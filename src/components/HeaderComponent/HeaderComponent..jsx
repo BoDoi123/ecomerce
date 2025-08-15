@@ -11,8 +11,14 @@ import {
 	WrapperTextHeaderCart,
 } from "./style";
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
+import { useNavigate } from "react-router";
 
 const HeaderComponent = () => {
+	const navigate = useNavigate();
+	const handleNavigateLogin = () => {
+		navigate("./sign-in");
+	};
+
 	return (
 		<div
 			style={{
@@ -43,7 +49,10 @@ const HeaderComponent = () => {
 				>
 					<WrapperHeaderAccount>
 						<UserOutlined style={{ fontSize: "3rem" }} />
-						<div>
+						<div
+							onClick={handleNavigateLogin}
+							style={{ cursor: "pointer" }}
+						>
 							<span>Đăng nhập / Đăng ký</span>
 							<div>
 								<span>Tài khoản</span>
