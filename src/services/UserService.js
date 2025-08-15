@@ -17,3 +17,16 @@ export const signUpUser = async (data) => {
 
 	return res.data;
 };
+
+export const getDetailsUser = async (id, access_token) => {
+	const res = await axios.get(
+		`${import.meta.env.VITE_APP_URL_BACKEND}/user/get-details/${id}`,
+		{
+			headers: {
+				token: `Bearer ${access_token}`,
+			},
+		}
+	);
+
+	return res.data;
+};

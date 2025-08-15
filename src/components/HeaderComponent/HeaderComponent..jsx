@@ -12,9 +12,12 @@ import {
 } from "./style";
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
 import { useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const HeaderComponent = () => {
 	const navigate = useNavigate();
+	const user = useSelector((state) => state.user);
+
 	const handleNavigateLogin = () => {
 		navigate("./sign-in");
 	};
@@ -49,16 +52,27 @@ const HeaderComponent = () => {
 				>
 					<WrapperHeaderAccount>
 						<UserOutlined style={{ fontSize: "3rem" }} />
-						<div
-							onClick={handleNavigateLogin}
-							style={{ cursor: "pointer" }}
-						>
-							<span>Đăng nhập / Đăng ký</span>
-							<div>
-								<span>Tài khoản</span>
-								<CaretDownOutlined />
+						{user?.name ? (
+							<div
+								style={{
+									cursor: "pointer",
+									fontSize: "1.4rem",
+								}}
+							>
+								{user.name}
 							</div>
-						</div>
+						) : (
+							<div
+								onClick={handleNavigateLogin}
+								style={{ cursor: "pointer" }}
+							>
+								<span>Đăng nhập / Đăng ký</span>
+								<div>
+									<span>Tài khoản</span>
+									<CaretDownOutlined />
+								</div>
+							</div>
+						)}
 					</WrapperHeaderAccount>
 
 					<WrapperTextHeaderCart>
