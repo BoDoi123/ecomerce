@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, isAction } from "@reduxjs/toolkit";
 
 const initialState = {
 	name: "",
@@ -8,6 +8,7 @@ const initialState = {
 	avatar: "",
 	id: "",
 	access_token: "",
+	isAdmin: false,
 };
 
 export const userSlide = createSlice({
@@ -23,6 +24,7 @@ export const userSlide = createSlice({
 				phone = "",
 				_id = "",
 				avatar = "",
+				isAdmin = true,
 			} = action.payload;
 			state.name = name;
 			state.email = email;
@@ -31,6 +33,7 @@ export const userSlide = createSlice({
 			state.avatar = avatar;
 			state.id = _id;
 			state.access_token = access_token;
+			state.isAdmin = isAdmin;
 		},
 		resetUser: (state) => {
 			state.name = "";
@@ -40,6 +43,7 @@ export const userSlide = createSlice({
 			state.avatar = "";
 			state.id = "";
 			state.access_token = "";
+			state.isAdmin = false;
 		},
 	},
 });

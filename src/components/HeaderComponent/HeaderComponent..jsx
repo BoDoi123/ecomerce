@@ -32,7 +32,7 @@ const HeaderComponent = () => {
 		setUserName(user?.name || user?.email);
 		setUserAvatar(user?.avatar);
 		setLoading(false);
-	}, [user?.name, user?.avatar]);
+	}, [user?.name, user?.email, user?.avatar]);
 
 	const handleNavigateLogin = () => {
 		localStorage.removeItem("access_token");
