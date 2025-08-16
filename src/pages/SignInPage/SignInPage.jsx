@@ -10,7 +10,7 @@ import { Image } from "antd";
 import imageLogo from "../../assets/imgs/logo-login.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import * as UserService from "../../services/UserService";
+import * as UserService from "../../services/userService";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
 import { jwtDecode } from "jwt-decode";

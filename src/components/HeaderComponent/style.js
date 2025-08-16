@@ -31,3 +31,11 @@ export const WrapperTextHeaderCart = styled.span`
 	font-size: 12px;
 	while-space: nowrap;
 `;
+
+export const WrapperContentPopup = styled.p`
+	cursor: pointer;
+	&:hover {
+		background: rgb(26, 148, 255);
+		color: #fff;
+	}
+`;

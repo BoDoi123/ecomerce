@@ -42,6 +42,13 @@ export const refreshToken = async () => {
 		}
 	);
 
-    console.log('res', res.data);
+	return res.data;
+};
+
+export const logoutUser = async () => {
+	const res = await axios.post(
+		`${import.meta.env.VITE_APP_URL_BACKEND}/user/log-out`
+	);
+
 	return res.data;
 };
