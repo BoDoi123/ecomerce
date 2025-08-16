@@ -1,4 +1,5 @@
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 export const axiosJWT = axios.create();
 
@@ -41,5 +42,6 @@ export const refreshToken = async () => {
 		}
 	);
 
+    console.log('res', res.data);
 	return res.data;
 };
