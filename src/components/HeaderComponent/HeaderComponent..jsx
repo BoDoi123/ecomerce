@@ -35,6 +35,7 @@ const HeaderComponent = () => {
 	}, [user?.name, user?.avatar]);
 
 	const handleNavigateLogin = () => {
+		localStorage.removeItem("access_token");
 		navigate("/sign-in");
 	};
 

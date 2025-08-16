@@ -11,9 +11,24 @@ import slider3 from "../../assets/imgs/slider3.webp";
 import slider4 from "../../assets/imgs/slider4.webp";
 import slider5 from "../../assets/imgs/slider5.webp";
 import CardComponent from "../../components/CardComponent/CardComponent";
+import { useQuery } from "@tanstack/react-query";
+import * as ProductService from "../../services/ProductService";
 
 const HomePage = () => {
 	const arr = ["TV", "Tu lanh", "Lap top"];
+
+	const fetchProductsAll = async () => {
+		const res = await ProductService.getAllProducts();
+		return res;
+	};
+
+	const { isLoading, data: products } = useQuery({
+		queryKey: ["products"],
+		queryFn: fetchProductsAll,
+		retry: 3,
+		retryDelay: 1000,
+	});
+	console.log("data", products);
 
 	return (
 		<>
@@ -48,14 +63,22 @@ const HomePage = () => {
 					/>
 
 					<WrapperProducts>
-						<CardComponent />
-						<CardComponent />
-						<CardComponent />
-						<CardComponent />
-						<CardComponent />
-						<CardComponent />
-						<CardComponent />
-						<CardComponent />
+						{products?.data?.map((product) => {
+							return (
+								<CardComponent
+									key={product._id}
+									countInStock={product.countInStock}
+									description={product.description}
+									image={product.image}
+									name={product.name}
+									price={product.price}
+									rating={product.rating}
+									type={product.type}
+									sold={product.sold}
+									discount={product.discount}
+								/>
+							);
+						})}
 					</WrapperProducts>
 
 					<div
