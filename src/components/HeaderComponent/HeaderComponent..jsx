@@ -12,18 +12,27 @@ import {
 	WrapperContentPopup,
 } from "./style";
 import ButtonInputSearch from "../ButtonInputSearch/ButtonInputSearch";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as UserService from "../../services/userService";
 import { resetUser } from "../../redux/slides/userSlide";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../LoadingComponent/Loading";
 
 const HeaderComponent = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const [userName, setUserName] = useState("");
+	const [userAvatar, setUserAvatar] = useState("");
 	const user = useSelector((state) => state.user);
 	const [loading, setLoading] = useState(false);
+
+	useEffect(() => {
+		setLoading(true);
+		setUserName(user?.name || user?.email);
+		setUserAvatar(user?.avatar);
+		setLoading(false);
+	}, [user?.name, user?.avatar]);
 
 	const handleNavigateLogin = () => {
 		navigate("/sign-in");
@@ -33,6 +42,7 @@ const HeaderComponent = () => {
 		setLoading(true);
 		await UserService.logoutUser();
 		dispatch(resetUser());
+		localStorage.removeItem("access_token");
 		setLoading(false);
 	};
 
@@ -77,7 +87,21 @@ const HeaderComponent = () => {
 				>
 					<Loading isLoading={loading}>
 						<WrapperHeaderAccount>
-							<UserOutlined style={{ fontSize: "3rem" }} />
+							{userAvatar ? (
+								<img
+									src={userAvatar}
+									alt="avatar"
+									style={{
+										height: "30px",
+										width: "30px",
+										borderRadius: "50%",
+										objectFit: "cover",
+									}}
+								/>
+							) : (
+								<UserOutlined style={{ fontSize: "3rem" }} />
+							)}
+
 							{user?.access_token ? (
 								<>
 									<Popover content={content} trigger="click">
@@ -87,7 +111,7 @@ const HeaderComponent = () => {
 												fontSize: "1.4rem",
 											}}
 										>
-											{user.name || user.email || "User"}
+											{userName}
 										</div>
 									</Popover>
 								</>

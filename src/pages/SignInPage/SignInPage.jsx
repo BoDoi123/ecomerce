@@ -9,7 +9,7 @@ import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Image } from "antd";
 import imageLogo from "../../assets/imgs/logo-login.png";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import * as UserService from "../../services/userService";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
@@ -26,7 +26,6 @@ const SignInPage = () => {
 
 	const mutation = useMutationHook((data) => UserService.loginUser(data));
 	const { data, isPending } = mutation;
-	console.log(mutation);
 
 	useEffect(() => {
 		if (data?.status === "OK") {

@@ -9,7 +9,7 @@ import InputForm from "../../components/InputForm/InputForm";
 import imageLogo from "../../assets/imgs/logo-login.png";
 import { Image } from "antd";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import * as UserService from "../../services/userService";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
