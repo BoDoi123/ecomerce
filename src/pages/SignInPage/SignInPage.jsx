@@ -25,10 +25,11 @@ const SignInPage = () => {
 	const dispatch = useDispatch();
 
 	const mutation = useMutationHook((data) => UserService.loginUser(data));
-	const { data, isPending, isSuccess } = mutation;
+	const { data, isPending } = mutation;
+	console.log(mutation);
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (data?.status === "OK") {
 			navigate("/");
 			localStorage.setItem(
 				"access_token",
@@ -43,7 +44,7 @@ const SignInPage = () => {
 				}
 			}
 		}
-	}, [isSuccess]);
+	}, [data]);
 
 	const handleGetDetailsUser = async (id, token) => {
 		const res = await UserService.getDetailsUser(id, token);

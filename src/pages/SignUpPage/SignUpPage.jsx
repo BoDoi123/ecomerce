@@ -10,7 +10,7 @@ import imageLogo from "../../assets/imgs/logo-login.png";
 import { Image } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
-import * as UserService from "../../services/UserService";
+import * as UserService from "../../services/userService";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
 import * as message from "../../components/Message/Message";

@@ -26,7 +26,7 @@ const HeaderComponent = () => {
 	const [loading, setLoading] = useState(false);
 
 	const handleNavigateLogin = () => {
-		navigate("./sign-in");
+		navigate("/sign-in");
 	};
 
 	const handleLogout = async () => {
@@ -41,7 +41,9 @@ const HeaderComponent = () => {
 			<WrapperContentPopup onClick={handleLogout}>
 				Đăng xuất
 			</WrapperContentPopup>
-			<WrapperContentPopup>Thông tin người dùng</WrapperContentPopup>
+			<WrapperContentPopup onClick={() => navigate("/profile-user")}>
+				Thông tin người dùng
+			</WrapperContentPopup>
 		</div>
 	);
 
@@ -76,7 +78,7 @@ const HeaderComponent = () => {
 					<Loading isLoading={loading}>
 						<WrapperHeaderAccount>
 							<UserOutlined style={{ fontSize: "3rem" }} />
-							{user?.name ? (
+							{user?.access_token ? (
 								<>
 									<Popover content={content} trigger="click">
 										<div
@@ -85,7 +87,7 @@ const HeaderComponent = () => {
 												fontSize: "1.4rem",
 											}}
 										>
-											{user.name}
+											{user.name || user.email || "User"}
 										</div>
 									</Popover>
 								</>
