@@ -14,7 +14,7 @@ import * as UserService from "../../services/userService";
 import * as message from "../../components/Message/Message";
 import { updateUser } from "../../redux/slides/userSlide";
 import { useMutationHook } from "../../hooks/useMutationHook";
-import { Button, Upload } from "antd";
+import { Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { getBase64 } from "../../utils";
 
@@ -200,7 +200,10 @@ const ProfilePage = () => {
 					<WrapperInput>
 						<WrapperLabel htmlFor="avatar">Avatar</WrapperLabel>
 
-						<WrapperUploadFile maxCount={1} onChange={handleOnChangeAvatar}>
+						<WrapperUploadFile
+							maxCount={1}
+							onChange={handleOnChangeAvatar}
+						>
 							<Button icon={<UploadOutlined />}>
 								Select File
 							</Button>

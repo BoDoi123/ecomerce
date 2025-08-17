@@ -24,17 +24,17 @@ const SignUpPage = () => {
 	const [confirmPassword, setConfirmPassword] = useState("");
 
 	const mutation = useMutationHook((data) => UserService.signUpUser(data));
-	const { data, isPending, isSuccess, isError } = mutation;
+	const { data, isPending } = mutation;
 
 	useEffect(() => {
-		if (isSuccess) {
+		if (data?.status === "OK") {
 			message.success();
 
 			handleNavigateSignIn();
-		} else if (isError) {
+		} else if (data?.status === "ERR") {
 			message.error();
 		}
-	}, [isSuccess, isError]);
+	}, [isPending]);
 
 	const handleNavigateSignIn = () => {
 		navigate("/sign-in");
