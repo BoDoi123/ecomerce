@@ -19,7 +19,7 @@ import { resetUser } from "../../redux/slides/userSlide";
 import { useEffect, useState } from "react";
 import Loading from "../LoadingComponent/Loading";
 
-const HeaderComponent = () => {
+const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [userName, setUserName] = useState("");
@@ -49,11 +49,18 @@ const HeaderComponent = () => {
 
 	const content = (
 		<div>
-			<WrapperContentPopup onClick={handleLogout}>
-				Đăng xuất
-			</WrapperContentPopup>
 			<WrapperContentPopup onClick={() => navigate("/profile-user")}>
 				Thông tin người dùng
+			</WrapperContentPopup>
+
+			{user?.isAdmin && (
+				<WrapperContentPopup onClick={() => navigate("/system/admin")}>
+					Quản lý hệ thống
+				</WrapperContentPopup>
+			)}
+
+			<WrapperContentPopup onClick={handleLogout}>
+				Đăng xuất
 			</WrapperContentPopup>
 		</div>
 	);
@@ -67,17 +74,28 @@ const HeaderComponent = () => {
 				justifyContent: "center",
 			}}
 		>
-			<WrapperHeader>
+			<WrapperHeader
+				style={{
+					justifyContent:
+						isHiddenCart && isHiddenSearch
+							? "space-between"
+							: "unset",
+				}}
+			>
 				<Col span={5}>
 					<WrapperTextHeader>LAPTRINHTHATDE</WrapperTextHeader>
 				</Col>
-				<Col span={13}>
-					<ButtonInputSearch
-						size="large"
-						placeholder="input search text"
-						textButton="Tìm kiếm"
-					/>
-				</Col>
+
+				{!isHiddenSearch && (
+					<Col span={13}>
+						<ButtonInputSearch
+							size="large"
+							placeholder="input search text"
+							textButton="Tìm kiếm"
+						/>
+					</Col>
+				)}
+
 				<Col
 					span={6}
 					style={{
@@ -131,14 +149,16 @@ const HeaderComponent = () => {
 						</WrapperHeaderAccount>
 					</Loading>
 
-					<WrapperTextHeaderCart>
-						<Badge count={4} size="small">
-							<ShoppingCartOutlined
-								style={{ fontSize: "3rem", color: "#fff" }}
-							/>
-						</Badge>
-						<span>Giỏ hàng</span>
-					</WrapperTextHeaderCart>
+					{!isHiddenCart && (
+						<WrapperTextHeaderCart>
+							<Badge count={4} size="small">
+								<ShoppingCartOutlined
+									style={{ fontSize: "3rem", color: "#fff" }}
+								/>
+							</Badge>
+							<span>Giỏ hàng</span>
+						</WrapperTextHeaderCart>
+					)}
 				</Col>
 			</WrapperHeader>
 		</div>

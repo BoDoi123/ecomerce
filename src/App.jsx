@@ -16,11 +16,13 @@ function App() {
 	const user = useSelector((state) => state.user);
 
 	useEffect(() => {
+		setIsLoading(true);
 		const { storageData, decoded } = handleDecoded();
 
 		if (decoded?.id) {
 			handleGetDetailsUser(decoded?.id, storageData);
 		}
+		setIsLoading(false);
 	}, []);
 
 	const handleDecoded = () => {
@@ -55,7 +57,6 @@ function App() {
 
 	const handleGetDetailsUser = async (id, token) => {
 		const res = await UserService.getDetailsUser(id, token);
-		console.log("res", res);
 		if (res?.status === "ERROR") {
 			localStorage.removeItem("access_token");
 		}
@@ -79,7 +80,7 @@ function App() {
 							return (
 								<Route
 									key={route.path}
-									path={isCheckAuth ? route.path : "*"}
+									path={isCheckAuth ? route.path : "error"}
 									element={
 										<Layout>
 											<Page />
