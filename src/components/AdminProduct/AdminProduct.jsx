@@ -200,11 +200,11 @@ const AdminProduct = () => {
 	}, [form, stateProductDetails]);
 
 	useEffect(() => {
-		if (rowSelected) {
+		if (rowSelected && isOpenDrawer) {
 			setIsLoadingUpdate(true);
 			fetchProductDetails(rowSelected);
 		}
-	}, [rowSelected]);
+	}, [rowSelected, isOpenDrawer]);
 
 	const handleDetailsProduct = () => {
 		setIsOpenDrawer(true);

@@ -157,11 +157,11 @@ const AdminUser = () => {
 	}, [form, stateUserDetails]);
 
 	useEffect(() => {
-		if (rowSelected) {
+		if (rowSelected && isOpenDrawer) {
 			setIsLoadingUpdate(true);
 			fetchUserDetails(rowSelected);
 		}
-	}, [rowSelected]);
+	}, [rowSelected, isOpenDrawer]);
 
 	const handleDetailsUser = () => {
 		setIsOpenDrawer(true);
