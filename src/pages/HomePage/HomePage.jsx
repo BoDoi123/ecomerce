@@ -13,24 +13,54 @@ import slider5 from "../../assets/imgs/slider5.webp";
 import CardComponent from "../../components/CardComponent/CardComponent";
 import { useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
+import { useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+import Loading from "../../components/LoadingComponent/Loading";
+import { useDebounce } from "../../hooks/useDebounce";
 
 const HomePage = () => {
+	const searchProduct = useSelector((state) => state.product?.search);
+	const searchDebounce = useDebounce(searchProduct, 1000);
+	const refSearch = useRef();
+	const [loading, setLoading] = useState(false);
+	const [stateProduct, setStateProduct] = useState([]);
 	const arr = ["TV", "Tu lanh", "Lap top"];
 
-	const fetchProductsAll = async () => {
-		const res = await ProductService.getAllProducts();
-		return res;
+	const fetchProductsAll = async (search) => {
+		const res = await ProductService.getAllProducts(search);
+
+		if (search.length > 0 || refSearch.current) {
+			setStateProduct(res?.data);
+		} else {
+			return res;
+		}
 	};
 
+	useEffect(() => {
+		if (refSearch.current) {
+			setLoading(true);
+			fetchProductsAll(searchDebounce);
+		}
+
+		refSearch.current = true;
+		setLoading(false);
+	}, [searchDebounce]);
+
 	const { isLoading, data: products } = useQuery({
-		queryKey: ["products"],
+		queryKey: "products",
 		queryFn: fetchProductsAll,
 		retry: 3,
 		retryDelay: 1000,
 	});
 
+	useEffect(() => {
+		if (products?.data?.length > 0) {
+			setStateProduct(products?.data);
+		}
+	}, [products]);
+
 	return (
-		<>
+		<Loading isLoading={isLoading || loading}>
 			<div style={{ width: "1270px", margin: "0 auto" }}>
 				<WrapperTypeProduct>
 					{arr.map((item) => {
@@ -62,7 +92,7 @@ const HomePage = () => {
 					/>
 
 					<WrapperProducts>
-						{products?.data?.map((product) => {
+						{stateProduct?.map((product) => {
 							return (
 								<CardComponent
 									key={product._id}
@@ -103,7 +133,7 @@ const HomePage = () => {
 					</div>
 				</div>
 			</div>
-		</>
+		</Loading>
 	);
 };
 

@@ -18,12 +18,14 @@ import * as UserService from "../../services/userService";
 import { resetUser } from "../../redux/slides/userSlide";
 import { useEffect, useState } from "react";
 import Loading from "../LoadingComponent/Loading";
+import { searchProduct } from "../../redux/slides/productSlide";
 
 const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const [userName, setUserName] = useState("");
 	const [userAvatar, setUserAvatar] = useState("");
+	const [search, setSearch] = useState("");
 	const user = useSelector((state) => state.user);
 	const [loading, setLoading] = useState(false);
 
@@ -65,6 +67,11 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 		</div>
 	);
 
+	const onSearch = (e) => {
+		setSearch(e.target.value);
+		dispatch(searchProduct(e.target.value));
+	};
+
 	return (
 		<div
 			style={{
@@ -92,6 +99,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 							size="large"
 							placeholder="input search text"
 							textButton="Tìm kiếm"
+							onChange={onSearch}
 						/>
 					</Col>
 				)}

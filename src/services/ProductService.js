@@ -1,10 +1,19 @@
 import axios from "axios";
 import { axiosJWT } from "./userService";
 
-export const getAllProducts = async () => {
-	const res = await axios.get(
-		`${import.meta.env.VITE_APP_URL_BACKEND}/product/get-all`
-	);
+export const getAllProducts = async (search) => {
+	let res = {};
+	if (search.length > 0) {
+		res = await axios.get(
+			`${
+				import.meta.env.VITE_APP_URL_BACKEND
+			}/product/get-all?filter=name&filter=${search}`
+		);
+	} else {
+		res = await axios.get(
+			`${import.meta.env.VITE_APP_URL_BACKEND}/product/get-all`
+		);
+	}
 
 	return res.data;
 };
