@@ -4,7 +4,7 @@ import {
 	SearchOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Space } from "antd";
-import { WrapperHeader } from "./style";
+import { WrapperFormItem, WrapperHeader, WrapperUploadFile } from "./style";
 import TableComponent from "../TableComponent/TableComponent";
 import InputComponent from "../InputComponent/InputComponent";
 import ModalComponent from "../ModalComponent/ModalComponent";
@@ -26,17 +26,13 @@ const AdminUser = () => {
 	const user = useSelector((state) => state?.user);
 	const searchInput = useRef(null);
 
-	const [stateUser, setStateUser] = useState({
-		name: "",
-		email: "",
-		phone: "",
-		isAdmin: false,
-	});
 	const [stateUserDetails, setStateUserDetails] = useState({
 		name: "",
 		email: "",
 		phone: "",
 		isAdmin: false,
+		avatar: "",
+		address: "",
 	});
 	const [form] = Form.useForm();
 
@@ -124,6 +120,8 @@ const AdminUser = () => {
 			email: "",
 			phone: "",
 			isAdmin: false,
+			avatar: "",
+			address: "",
 		});
 		form.resetFields();
 	};
@@ -146,6 +144,8 @@ const AdminUser = () => {
 				email: res?.data.email,
 				phone: res?.data.phone,
 				isAdmin: res?.data.isAdmin,
+				address: res?.data.address,
+				avatar: res?.data.avatar,
 			});
 		}
 
@@ -323,6 +323,12 @@ const AdminUser = () => {
 			...getColumnSearchProps("phone"),
 		},
 		{
+			title: "Address",
+			dataIndex: "emaddress",
+			sorter: (a, b) => a.address.length - b.address.length,
+			...getColumnSearchProps("address"),
+		},
+		{
 			title: "Action",
 			dataIndex: "action",
 			render: renderAction,
@@ -345,19 +351,6 @@ const AdminUser = () => {
 		});
 	};
 
-	const handleOnChangeAvatar = async ({ fileList }) => {
-		const file = fileList[0];
-
-		if (!file.url && !file.preview) {
-			file.preview = await getBase64(file.originFileObj);
-		}
-
-		setStateUser({
-			...stateUser,
-			image: file.preview,
-		});
-	};
-
 	const handleOnChangeAvatarDetails = async ({ fileList }) => {
 		const file = fileList[0];
 
@@ -367,7 +360,7 @@ const AdminUser = () => {
 
 		setStateUserDetails({
 			...stateUserDetails,
-			image: file.preview,
+			avatar: file.preview,
 		});
 	};
 
@@ -490,14 +483,32 @@ const AdminUser = () => {
 							/>
 						</Form.Item>
 
-						{/* Image */}
-						{/* <WrapperFormItem
-							label="Image"
-							name="image"
+						{/* Address */}
+						<Form.Item
+							label="Address"
+							name="address"
 							rules={[
 								{
 									required: true,
-									message: "Please input your image!",
+									message: "Please input your address!",
+								},
+							]}
+						>
+							<InputComponent
+								value={stateUserDetails.address}
+								onChange={handleOnChangeDetails}
+								name="address"
+							/>
+						</Form.Item>
+
+						{/* Image */}
+						<WrapperFormItem
+							label="Avatar"
+							name="avatar"
+							rules={[
+								{
+									required: true,
+									message: "Please input your avatar!",
 								},
 							]}
 						>
@@ -509,9 +520,9 @@ const AdminUser = () => {
 									Select File
 								</Button>
 
-								{stateUserDetails?.image && (
+								{stateUserDetails?.avatar && (
 									<img
-										src={stateUserDetails?.image}
+										src={stateUserDetails?.avatar}
 										style={{
 											height: "60px",
 											width: "60px",
@@ -523,7 +534,7 @@ const AdminUser = () => {
 									/>
 								)}
 							</WrapperUploadFile>
-						</WrapperFormItem> */}
+						</WrapperFormItem>
 
 						<Form.Item
 							label={null}

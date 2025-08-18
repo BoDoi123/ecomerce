@@ -1,7 +1,7 @@
-import { DownOutlined, SettingOutlined } from "@ant-design/icons";
 import { Table } from "antd";
 import Loading from "../LoadingComponent/Loading";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const TableComponent = (props) => {
 	const {
@@ -12,15 +12,20 @@ const TableComponent = (props) => {
 		handleDeleteMany,
 	} = props;
 	const [rowSelectedKeys, setRowSelectedKeys] = useState([]);
+	const tableRef = useRef(null);
+	const [isReady, setIsReady] = useState(false);
+
+	useEffect(() => {
+		// Đảm bảo table ref đã được khởi tạo
+		if (tableRef.current) {
+			setIsReady(true);
+		}
+	}, [tableRef.current]);
 
 	const rowSelection = {
 		onChange: (selectedRowKeys) => {
 			setRowSelectedKeys(selectedRowKeys);
 		},
-		// getCheckboxProps: (record) => ({
-		// 	disabled: record.name === "Disbaled User",
-		// 	name: record.name,
-		// }),
 	};
 
 	const handleDeleteAll = () => {
@@ -45,8 +50,44 @@ const TableComponent = (props) => {
 				</div>
 			)}
 
+			{isReady && (
+				<DownloadTableExcel
+					filename="table data"
+					sheet="data"
+					currentTableRef={tableRef.current}
+				>
+					<button>Export excel</button>
+				</DownloadTableExcel>
+			)}
+
+			<table ref={tableRef} style={{ display: "none" }}>
+				<thead>
+					<tr>
+						{columns.map((column) => (
+							<th key={column.key || column.dataIndex}>
+								{column.title}
+							</th>
+						))}
+					</tr>
+				</thead>
+				<tbody>
+					{data?.map((record, index) => (
+						<tr key={record.key || index}>
+							{columns.map((column) => (
+								<td key={column.key || column.dataIndex}>
+									{record[column.dataIndex]}
+								</td>
+							))}
+						</tr>
+					))}
+				</tbody>
+			</table>
+
 			<Table
-				rowSelection={{ type: selectionType, ...rowSelection }}
+				rowSelection={{
+					type: selectionType,
+					...rowSelection,
+				}}
 				columns={columns}
 				dataSource={data}
 				{...props}
