@@ -92,6 +92,17 @@ const AdminProduct = () => {
 	});
 	const { data: dataDeleted, isPending: isLoadingDeleted } = mutationDeleted;
 
+	const mutationDeletedMany = useMutationHook(async (data) => {
+		const { ids, access_token } = data;
+		const res = await ProductService.deleteManyProduct({
+			ids,
+			access_token,
+		});
+		return res;
+	});
+	const { data: dataDeletedMany, isPending: isLoadingDeletedMany } =
+		mutationDeletedMany;
+
 	useEffect(() => {
 		if (data?.status === "OK") {
 			message.success();
@@ -118,6 +129,15 @@ const AdminProduct = () => {
 			message.error();
 		}
 	}, [isLoadingUpdated]);
+
+	useEffect(() => {
+		if (dataDeletedMany?.status === "OK") {
+			message.success();
+			handleCloseDrawer();
+		} else if (dataDeletedMany?.status === "ERR") {
+			message.error();
+		}
+	}, [isLoadingDeletedMany]);
 
 	const handleCancelDelete = () => {
 		setIsModalOpenDelete(false);
@@ -188,6 +208,20 @@ const AdminProduct = () => {
 
 	const handleDetailsProduct = () => {
 		setIsOpenDrawer(true);
+	};
+
+	const handleDeleteManyProducts = (_ids) => {
+		mutationDeletedMany.mutate(
+			{
+				ids: _ids,
+				access_token: user?.access_token,
+			},
+			{
+				onSettled: () => {
+					queryProduct.refetch();
+				},
+			}
+		);
 	};
 
 	const queryProduct = useQuery({
@@ -478,6 +512,7 @@ const AdminProduct = () => {
 							},
 						};
 					}}
+					handleDeleteMany={handleDeleteManyProducts}
 				/>
 			</div>
 

@@ -61,6 +61,17 @@ const AdminUser = () => {
 	});
 	const { data: dataDeleted, isPending: isLoadingDeleted } = mutationDeleted;
 
+	const mutationDeletedMany = useMutationHook(async (data) => {
+		const { ids, access_token } = data;
+		const res = await UserService.deleteManyUser({
+			ids,
+			access_token,
+		});
+		return res;
+	});
+	const { data: dataDeletedMany, isPending: isLoadingDeletedMany } =
+		mutationDeletedMany;
+
 	useEffect(() => {
 		if (dataDeleted?.status === "OK") {
 			message.success();
@@ -78,6 +89,15 @@ const AdminUser = () => {
 			message.error();
 		}
 	}, [isLoadingUpdated]);
+
+	useEffect(() => {
+		if (dataDeletedMany?.status === "OK") {
+			message.success();
+			handleCloseDrawer();
+		} else if (dataDeletedMany?.status === "ERR") {
+			message.error();
+		}
+	}, [isLoadingDeletedMany]);
 
 	const handleCancelDelete = () => {
 		setIsModalOpenDelete(false);
@@ -366,12 +386,27 @@ const AdminUser = () => {
 		);
 	};
 
+	const handleDeleteManyUsers = (_ids) => {
+		mutationDeletedMany.mutate(
+			{
+				ids: _ids,
+				access_token: user?.access_token,
+			},
+			{
+				onSettled: () => {
+					queryUser.refetch();
+				},
+			}
+		);
+	};
+
 	return (
 		<div>
 			<WrapperHeader>Quản lý người dùng</WrapperHeader>
 
 			<div style={{ marginTop: "20px" }}>
 				<TableComponent
+					handleDeleteMany={handleDeleteManyUsers}
 					columns={columns}
 					isLoading={isLoadingUsers}
 					data={dataTable}

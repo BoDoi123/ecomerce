@@ -53,3 +53,17 @@ export const deleteProduct = async ({ id, access_token }) => {
 
 	return res.data;
 };
+
+export const deleteManyProduct = async ({ ids, access_token }) => {
+	const res = await axiosJWT.post(
+		`${import.meta.env.VITE_APP_URL_BACKEND}/product/delete-many`,
+		ids,
+		{
+			headers: {
+				token: `Bearer ${access_token}`,
+			},
+		}
+	);
+
+	return res.data;
+};
