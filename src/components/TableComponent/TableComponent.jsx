@@ -1,7 +1,6 @@
 import { Table } from "antd";
 import Loading from "../LoadingComponent/Loading";
 
-
 const TableComponent = (props) => {
 	const {
 		selectionType = "checkbox",
@@ -24,6 +23,7 @@ const TableComponent = (props) => {
 				rowSelection={{ type: selectionType, ...rowSelection }}
 				columns={columns}
 				dataSource={data}
+				{...props}
 			/>
 		</Loading>
 	);

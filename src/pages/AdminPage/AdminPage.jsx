@@ -1,6 +1,5 @@
 import { Menu } from "antd";
 import { useState } from "react";
-import { getLevelKeys } from "../../utils";
 import { UserOutlined, AppstoreOutlined } from "@ant-design/icons";
 import HeaderComponent from "../../components/HeaderComponent/HeaderComponent.";
 import AdminUser from "../../components/AdminUser/AdminUser";
@@ -20,7 +19,6 @@ const AdminPage = () => {
 		},
 	];
 
-	const levelKeys = getLevelKeys(items);
 	const [keySelected, setKeySelected] = useState("");
 
 	const renderPage = (key) => {
@@ -51,6 +49,7 @@ const AdminPage = () => {
 					style={{
 						width: 256,
 						boxShadow: "1px 1px 2px #ccc",
+						height: "100vh",
 					}}
 					items={items}
 					onClick={handleOnClick}
