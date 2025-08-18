@@ -26,12 +26,7 @@ const CardComponent = (props) => {
 			hoverable
 			style={{ width: 200 }}
 			bodyStyle={{ padding: "10px" }}
-			cover={
-				<img
-					alt="example"
-					src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png"
-				/>
-			}
+			cover={<img alt="example" src={image} />}
 		>
 			<StyleNameProduct>{name}</StyleNameProduct>
 
@@ -53,8 +48,10 @@ const CardComponent = (props) => {
 			</WrapperReportText>
 
 			<WrapperPriceText>
-				<span style={{ marginRight: "8px" }}>{price} </span>{" "}
-				<WrapperDiscountText>{discount || 5}%</WrapperDiscountText>
+				<span style={{ marginRight: "8px" }}>
+					{price.toLocaleString()}{" "}
+				</span>{" "}
+				<WrapperDiscountText>- {discount || 5}%</WrapperDiscountText>
 			</WrapperPriceText>
 		</WrapperCardStyle>
 	);
