@@ -26,8 +26,6 @@ const AdminProduct = () => {
 	const [isLoadingUpdate, setIsLoadingUpdate] = useState(false);
 	const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
 	const user = useSelector((state) => state?.user);
-	const [searchText, setSearchText] = useState("");
-	const [searchedColumn, setSearchedColumn] = useState("");
 	const searchInput = useRef(null);
 
 	const [stateProduct, setStateProduct] = useState({
@@ -221,7 +219,7 @@ const AdminProduct = () => {
 		);
 	};
 
-	const handleSearch = (selectedKeys, confirm, dataIndex) => {
+	const handleSearch = (confirm) => {
 		confirm();
 		// setSearchText(selectedKeys[0]);
 		// setSearchedColumn(dataIndex);
@@ -484,7 +482,6 @@ const AdminProduct = () => {
 			</div>
 
 			<ModalComponent
-				forceRender
 				title="Tạo sản phẩm"
 				closable={{ "aria-label": "Custom Close Button" }}
 				open={isModalOpen}
@@ -828,6 +825,7 @@ const AdminProduct = () => {
 			</DrawerComponent>
 
 			<ModalComponent
+				forceRender
 				title="Xóa sản phẩm"
 				closable={{ "aria-label": "Custom Close Button" }}
 				open={isModalOpenDelete}
