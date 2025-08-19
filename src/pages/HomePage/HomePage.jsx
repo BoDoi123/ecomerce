@@ -14,7 +14,7 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import * as ProductService from "../../services/ProductService";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../../components/LoadingComponent/Loading";
 import { useDebounce } from "../../hooks/useDebounce";
 
@@ -23,8 +23,7 @@ const HomePage = () => {
 	const searchDebounce = useDebounce(searchProduct, 1000);
 	const [loading, setLoading] = useState(false);
 	const [limit, setLimit] = useState(6);
-	// const [limit, setLimit] = useState(6);
-	const arr = ["TV", "Tu lanh", "Lap top"];
+	const [typeProducts, setTypeProducts] = useState([]);
 
 	const fetchProductsAll = async (context) => {
 		const limit = context?.queryKey && context?.queryKey[1];
@@ -33,6 +32,14 @@ const HomePage = () => {
 		const res = await ProductService.getAllProducts(search, limit);
 
 		return res;
+	};
+
+	const fetchAllTypeProduct = async () => {
+		const res = await ProductService.getAllTypeProduct();
+
+		if (res?.status === "OK") {
+			setTypeProducts(res?.data);
+		}
 	};
 
 	const {
@@ -47,11 +54,15 @@ const HomePage = () => {
 		placeholderData: keepPreviousData,
 	});
 
+	useEffect(() => {
+		fetchAllTypeProduct();
+	}, []);
+
 	return (
 		<Loading isLoading={isLoading || loading}>
 			<div style={{ width: "1270px", margin: "0 auto" }}>
 				<WrapperTypeProduct>
-					{arr.map((item) => {
+					{typeProducts.map((item) => {
 						return <TypeProduct name={item} key={item} />;
 					})}
 				</WrapperTypeProduct>

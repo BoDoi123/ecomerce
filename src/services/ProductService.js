@@ -7,13 +7,15 @@ export const getAllProducts = async (search, limit) => {
 		res = await axios.get(
 			`${
 				import.meta.env.VITE_APP_URL_BACKEND
-			}/product/get-all?filter=name&filter=${search}&limit=${limit}`
+			}/product/get-all?filter=name&filter=${search}${
+				limit ? `&limit=${limit}` : ""
+			}`
 		);
 	} else {
 		res = await axios.get(
-			`${
-				import.meta.env.VITE_APP_URL_BACKEND
-			}/product/get-all?limit=${limit}`
+			`${import.meta.env.VITE_APP_URL_BACKEND}/product/get-all${
+				limit ? `?limit=${limit}` : ""
+			}`
 		);
 	}
 
@@ -74,6 +76,14 @@ export const deleteManyProduct = async ({ ids, access_token }) => {
 				token: `Bearer ${access_token}`,
 			},
 		}
+	);
+
+	return res.data;
+};
+
+export const getAllTypeProduct = async () => {
+	const res = await axios.get(
+		`${import.meta.env.VITE_APP_URL_BACKEND}/product/get-all-type`
 	);
 
 	return res.data;

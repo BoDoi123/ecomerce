@@ -31,3 +31,23 @@ export const getLevelKeys = (items1) => {
 	func(items1);
 	return key;
 };
+
+export const renderOptions = (arr) => {
+	let result = [];
+
+	if (arr) {
+		result = arr?.map((opt) => {
+			return {
+				value: opt,
+				label: opt,
+			};
+		});
+	}
+
+	result.push({
+		label: "Thêm type",
+		value: "add-type",
+	});
+
+	return result;
+};
