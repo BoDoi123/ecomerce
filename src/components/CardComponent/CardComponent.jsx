@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import {
 	StyleNameProduct,
 	WrapperCardStyle,
@@ -19,7 +20,13 @@ const CardComponent = (props) => {
 		type,
 		discount,
 		sold,
+		id,
 	} = props;
+	const navigate = useNavigate();
+
+	const handleDetailsProduct = (id) => {
+		navigate(`/product-details/${id}`);
+	};
 
 	return (
 		<WrapperCardStyle
@@ -27,6 +34,7 @@ const CardComponent = (props) => {
 			style={{ width: 200 }}
 			bodyStyle={{ padding: "10px" }}
 			cover={<img alt="example" src={image} />}
+			onClick={() => handleDetailsProduct(id)}
 		>
 			<StyleNameProduct>{name}</StyleNameProduct>
 

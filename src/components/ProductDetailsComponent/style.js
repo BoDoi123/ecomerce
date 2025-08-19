@@ -63,7 +63,6 @@ export const WrapperAddressTextProduct = styled.div`
 export const WrapperQuantityProduct = styled.div`
 	display: flex;
 	align-items: center;
-	gap: 4px;
 	border-radius: 4px;
 	width: 120px;
 	border: 1px solid #ccc;
