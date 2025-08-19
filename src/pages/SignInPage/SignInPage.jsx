@@ -9,7 +9,7 @@ import { EyeFilled, EyeInvisibleFilled } from "@ant-design/icons";
 import { Image } from "antd";
 import imageLogo from "../../assets/imgs/logo-login.png";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as UserService from "../../services/userService";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
@@ -19,6 +19,7 @@ import { updateUser } from "../../redux/slides/userSlide";
 
 const SignInPage = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const [isShowPassword, setIsShowPassword] = useState(false);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -29,7 +30,12 @@ const SignInPage = () => {
 
 	useEffect(() => {
 		if (data?.status === "OK") {
-			navigate("/");
+			if (location.state) {
+				navigate(location.state);
+			} else {
+				navigate("/");
+			}
+
 			localStorage.setItem(
 				"access_token",
 				JSON.stringify(data?.access_token)
@@ -43,7 +49,7 @@ const SignInPage = () => {
 				}
 			}
 		}
-	}, [data]);
+	}, [isPending]);
 
 	const handleGetDetailsUser = async (id, token) => {
 		const res = await UserService.getDetailsUser(id, token);

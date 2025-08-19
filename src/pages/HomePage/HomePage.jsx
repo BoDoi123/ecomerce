@@ -29,18 +29,27 @@ const HomePage = () => {
 		const limit = context?.queryKey && context?.queryKey[1];
 		const search = context?.queryKey && context?.queryKey[2];
 
-		const res = await ProductService.getAllProducts(search, limit);
-
-		return res;
-	};
-
-	const fetchAllTypeProduct = async () => {
-		const res = await ProductService.getAllTypeProduct();
-
-		if (res?.status === "OK") {
-			setTypeProducts(res?.data);
+		try {
+			setLoading(true);
+			const res = await ProductService.getAllProducts(search, limit);
+			return res;
+		} finally {
+			setLoading(false);
 		}
 	};
+
+	const { data: typeProductsData } = useQuery({
+		queryKey: ["type-products"],
+		queryFn: async () => {
+			const res = await ProductService.getAllTypeProduct();
+			if (res?.status === "OK") {
+				return res.data;
+			}
+			return [];
+		},
+		staleTime: 1000 * 60 * 5, // Cache trong 5 phút
+		cacheTime: 1000 * 60 * 30, // Giữ cache trong 30 phút
+	});
 
 	const {
 		isLoading,
@@ -52,11 +61,15 @@ const HomePage = () => {
 		retry: 3,
 		retryDelay: 1000,
 		placeholderData: keepPreviousData,
+		staleTime: 1000 * 60 * 2, // Cache trong 2 phút
+		cacheTime: 1000 * 60 * 5, // Giữ cache trong 5 phút
 	});
 
 	useEffect(() => {
-		fetchAllTypeProduct();
-	}, []);
+		if (typeProductsData) {
+			setTypeProducts(typeProductsData);
+		}
+	}, [typeProductsData]);
 
 	return (
 		<Loading isLoading={isLoading || loading}>
@@ -121,7 +134,9 @@ const HomePage = () => {
 						<WrapperButtonMore
 							disabled={
 								products?.total === products?.data?.length ||
-								products?.totalPages === 1
+								products?.totalPages === 1 ||
+								isLoading ||
+								loading
 							}
 							textButton={
 								isPreviousData ? "Load more" : "Xem thêm"
@@ -139,7 +154,9 @@ const HomePage = () => {
 								borderRadius: "4px",
 								fontWeight: "500",
 							}}
-							onClick={() => setLimit((prev) => prev + 6)}
+							onClick={() => {
+								setLimit((prev) => prev + 6);
+							}}
 						/>
 					</div>
 				</div>

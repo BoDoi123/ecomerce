@@ -1,5 +1,4 @@
 import { Col, Image, InputNumber, Rate, Row } from "antd";
-import imageProduct from "../../assets/imgs/test.webp";
 import imageProductSmall from "../../assets/imgs/img_small.webp";
 import {
 	WrapperAddressTextProduct,
@@ -12,15 +11,20 @@ import {
 	WrapperStyleNameProduct,
 	WrapperStyleTextSell,
 } from "./style";
-import { StarFilled, PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import Loading from "../LoadingComponent/Loading";
 import * as ProductService from "../../services/ProductService";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { addOrderProduct } from "../../redux/slides/orderSlide";
 
 const ProductDetailsComponent = ({ idProduct }) => {
+	const navigate = useNavigate();
+	const location = useLocation();
+	const dispatch = useDispatch();
 	const [numProduct, setNumProduct] = useState(1);
 	const user = useSelector((state) => state.user);
 
@@ -52,6 +56,24 @@ const ProductDetailsComponent = ({ idProduct }) => {
 		retryDelay: 1000,
 		enabled: !!idProduct,
 	});
+
+	const handleAddOrderProduct = () => {
+		if (!user?.id) {
+			navigate("/sign-in", { state: location.pathname });
+		} else {
+			dispatch(
+				addOrderProduct({
+					orderItem: {
+						name: productDetails?.name,
+						amount: numProduct,
+						image: productDetails?.image,
+						price: productDetails?.price,
+						product: productDetails?._id,
+					},
+				})
+			);
+		}
+	};
 
 	return (
 		<Loading isLoading={isLoading}>
@@ -221,6 +243,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 								width: "220px",
 								border: "none",
 							}}
+							onClick={handleAddOrderProduct}
 							textButton={"Chọn mua"}
 						></ButtonComponent>
 
