@@ -21,13 +21,13 @@ const TypeProductPage = () => {
 
 					<Col span={20}>
 						<WrapperProducts>
-							<CardComponent />
-							<CardComponent />
-							<CardComponent />
-							<CardComponent />
-							<CardComponent />
-							<CardComponent />
-							<CardComponent />
+							<CardComponent price={1000} />
+							<CardComponent price={1000} />
+							<CardComponent price={1000} />
+							<CardComponent price={1000} />
+							<CardComponent price={1000} />
+							<CardComponent price={1000} />
+							<CardComponent price={1000} />
 						</WrapperProducts>
 
 						<Pagination
