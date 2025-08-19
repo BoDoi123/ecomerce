@@ -47,7 +47,7 @@ const NavBarComponent = () => {
 			case "star":
 				return options.map((option) => {
 					return (
-						<div style={{ display: "flex" }}>
+						<div style={{ display: "flex" }} key={option}>
 							<Rate
 								style={{ fontSize: "1.2rem" }}
 								disabled
@@ -64,7 +64,11 @@ const NavBarComponent = () => {
 
 			case "price":
 				return options.map((option) => {
-					return <WrapperTextPrice>{option}</WrapperTextPrice>;
+					return (
+						<WrapperTextPrice key={option}>
+							{option}
+						</WrapperTextPrice>
+					);
 				});
 			default:
 				return {};

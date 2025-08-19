@@ -9,7 +9,7 @@ const ProductDetailPage = () => {
 		<div style={{ background: "#efefef", height: "100vh", width: "100%" }}>
 			<div
 				style={{
-					padding: "0 auto",
+					margin: "0 auto",
 					width: "1270px",
 					height: "100%",
 				}}

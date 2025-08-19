@@ -22,6 +22,18 @@ export const getAllProducts = async (search, limit) => {
 	return res.data;
 };
 
+export const getAllProductsType = async (type, page, limit) => {
+	if (type) {
+		const res = await axios.get(
+			`${
+				import.meta.env.VITE_APP_URL_BACKEND
+			}/product/get-all?filter=type&filter=${type}&limit=${limit}&page=${page}`
+		);
+
+		return res.data;
+	}
+};
+
 export const createProduct = async (data) => {
 	const res = await axios.post(
 		`${import.meta.env.VITE_APP_URL_BACKEND}/product/create`,
