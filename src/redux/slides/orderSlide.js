@@ -112,7 +112,6 @@ export const orderSlide = createSlice({
 			});
 
 			state.orderItemsSelected = orderSelected;
-			console.log(state.orderItemsSelected);
 		},
 	},
 });

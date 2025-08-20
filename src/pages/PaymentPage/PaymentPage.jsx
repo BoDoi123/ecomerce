@@ -15,7 +15,6 @@ import ModalComponent from "../../components/ModalComponent/ModalComponent";
 import InputComponent from "../../components/InputComponent/InputComponent";
 import Loading from "../../components/LoadingComponent/Loading";
 import { useDispatch, useSelector } from "react-redux";
-import { selectedOrder } from "../../redux/slides/orderSlide";
 import { useEffect, useMemo, useState } from "react";
 import { convertPrice } from "../../utils";
 import * as UserService from "../../services/UserService";
@@ -30,7 +29,7 @@ const PaymentPage = ({ count = 1 }) => {
 	const user = useSelector((state) => {
 		return state.user;
 	});
-	const [listChecked, setListChecked] = useState([]);
+
 	const [isOpenModalUpdateInfo, setIsOpenModalUpdateInfo] = useState(false);
 	const [delivery, setDelivery] = useState("fast");
 	const [payment, setPayment] = useState("later_money");
@@ -42,10 +41,6 @@ const PaymentPage = ({ count = 1 }) => {
 	});
 	const [form] = Form.useForm();
 	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(selectedOrder({ listChecked }));
-	}, [listChecked]);
 
 	useEffect(() => {
 		if (isOpenModalUpdateInfo) {
@@ -100,11 +95,11 @@ const PaymentPage = ({ count = 1 }) => {
 		);
 	}, [priceMemo, priceDiscountMemo]);
 
-	const mutationAddOrder = useMutationHook(async (data) => {
-		const { access_token, stateUserDetails } = data;
+	const mutationAddOrder = useMutationHook(async (props) => {
+		const { access_token, data } = props;
 		const res = await OrderService.createOrder({
 			access_token,
-			data: stateUserDetails,
+			data,
 		});
 		return res;
 	});
@@ -119,8 +114,6 @@ const PaymentPage = ({ count = 1 }) => {
 	}, [isPendingAddOrder]);
 
 	const handleAddOrder = () => {
-		console.log(user);
-		console.log(order);
 		if (
 			user?.access_token &&
 			order?.orderItemsSelected &&
@@ -133,7 +126,7 @@ const PaymentPage = ({ count = 1 }) => {
 		) {
 			const data = {
 				orderItems: order?.orderItemsSelected,
-				fullName: user?.name,
+				fullname: user?.name,
 				address: user?.address,
 				phone: user?.phone,
 				city: user?.city,
@@ -143,6 +136,7 @@ const PaymentPage = ({ count = 1 }) => {
 				totalPrice: totalPriceMemo,
 				user: user?.id,
 			};
+
 			mutationAddOrder.mutate({
 				access_token: user?.access_token,
 				data,
@@ -423,7 +417,7 @@ const PaymentPage = ({ count = 1 }) => {
 									fontSize: "1.5rem",
 									fontWeight: 500,
 								}}
-								textButton={"Mua hàng"}
+								textButton={"Đặt hàng"}
 							></ButtonComponent>
 						</WrapperRight>
 					</div>
