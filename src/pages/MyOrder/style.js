@@ -21,6 +21,7 @@ export const WrapperHeaderItem = styled.div`
 `;
 
 export const WrapperFooterItem = styled.div`
+	padding: 12px;
 	margin-top: 12px;
 	display: flex;
 	flex-direction: column;

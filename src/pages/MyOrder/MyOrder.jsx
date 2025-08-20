@@ -60,8 +60,9 @@ const MyOrder = () => {
 		});
 	};
 
-	const renderProduct = (data) => {
-		return data?.map((order) => {
+	const renderProduct = (orderItems, data) => {
+		console.log(data);
+		return orderItems?.map((order) => {
 			return (
 				<WrapperHeaderItem>
 					<img
@@ -99,15 +100,33 @@ const MyOrder = () => {
 						</div>
 					</div>
 
-					<span
+					<div
 						style={{
-							fontSize: "1.5rem",
-							color: "#242424",
-							marginLeft: "auto",
+							width: "100%",
+							display: "flex",
+							flexDirection: "column",
 						}}
 					>
-						{convertPrice(order?.price)}
-					</span>
+						<span
+							style={{
+								fontSize: "1.5rem",
+								color: "#242424",
+								marginLeft: "auto",
+								marginBottom: "12px",
+							}}
+						>
+							Giá tiền: {convertPrice(order?.price)}
+						</span>
+						<span
+							style={{
+								fontSize: "1.5rem",
+								color: "#242424",
+								marginLeft: "auto",
+							}}
+						>
+							Phí ship: {convertPrice(data?.shippingPrice)}
+						</span>
+					</div>
 				</WrapperHeaderItem>
 			);
 		});
@@ -183,7 +202,7 @@ const MyOrder = () => {
 										</div>
 									</WrapperStatus>
 
-									{renderProduct(order?.orderItems)}
+									{renderProduct(order?.orderItems, order)}
 
 									<WrapperFooterItem>
 										<div>

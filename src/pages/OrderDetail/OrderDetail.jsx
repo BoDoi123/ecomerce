@@ -13,7 +13,6 @@ import Loading from "../../components/LoadingComponent/Loading";
 const OrderDetail = () => {
 	const location = useLocation();
 	const { state } = location;
-	console.log(state);
 
 	const renderProduct = (orderItems) => {
 		return orderItems?.map((order) => (
@@ -60,6 +59,9 @@ const OrderDetail = () => {
 				>
 					<span style={{ fontSize: "1.6rem" }}>
 						Giá tiền: {convertPrice(order?.price)}
+					</span>
+					<span style={{ fontSize: "1.6rem" }}>
+						Phí ship: {convertPrice(state?.order?.shippingPrice)}
 					</span>
 					<span
 						style={{
