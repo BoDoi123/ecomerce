@@ -8,6 +8,7 @@ import {
 	WrapperPriceDiscount,
 	WrapperRight,
 	WrapperStyleHeader,
+	WrapperStyleHeaderDelivery,
 	WrapperTotal,
 } from "./style";
 import { DeleteOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
@@ -17,7 +18,6 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import ModalComponent from "../../components/ModalComponent/ModalComponent";
 import InputComponent from "../../components/InputComponent/InputComponent";
 import Loading from "../../components/LoadingComponent/Loading";
-import imag from "../../assets/imgs/test.webp";
 import { useDispatch, useSelector } from "react-redux";
 import {
 	decreaseAmount,
@@ -32,6 +32,7 @@ import * as UserService from "../../services/UserService";
 import * as message from "../../components/Message/Message";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import { useNavigate } from "react-router-dom";
+import StepComponent from "../../components/StepComponent/StepComponent";
 
 const OrderPage = ({ count = 1 }) => {
 	const order = useSelector((state) => {
@@ -130,9 +131,12 @@ const OrderPage = ({ count = 1 }) => {
 	}, [order]);
 
 	const deliveryPriceMemo = useMemo(() => {
-		if (priceMemo > 100000) {
+		if (priceMemo >= 20000 && priceMemo < 500000) {
 			return 10000;
-		} else if (priceMemo === 0) {
+		} else if (
+			priceMemo >= 500000 ||
+			order?.orderItemsSelected?.length === 0
+		) {
 			return 0;
 		} else {
 			return 20000;
@@ -222,6 +226,22 @@ const OrderPage = ({ count = 1 }) => {
 		setIsOpenModalUpdateInfo(true);
 	};
 
+	const itemDelivery = [
+		{
+			title: "20000 VND",
+			description: "Dưới 200.000 VND",
+		},
+		{
+			title: "10.000 VND",
+			description: "Từ 200.000 VND đến dưới 500.000 VND",
+			subTitle: "Left 00:00:08",
+		},
+		{
+			title: "0 VND",
+			description: "trên 500.000 VND",
+		},
+	];
+
 	return (
 		<div style={{ background: "#f5f5fa", width: "100%", height: "100vh" }}>
 			<div style={{ height: "100%", width: "1270px", margin: "0 auto" }}>
@@ -229,6 +249,21 @@ const OrderPage = ({ count = 1 }) => {
 
 				<div style={{ display: "flex", justifyContent: "center" }}>
 					<WrapperLeft>
+						<WrapperStyleHeaderDelivery>
+							<StepComponent
+								items={itemDelivery}
+								current={
+									order?.orderItemsSelected.length === 0
+										? 0
+										: deliveryPriceMemo === 10000
+										? 2
+										: deliveryPriceMemo === 20000
+										? 1
+										: 3
+								}
+							/>
+						</WrapperStyleHeaderDelivery>
+
 						<WrapperStyleHeader>
 							<span
 								style={{
@@ -293,11 +328,12 @@ const OrderPage = ({ count = 1 }) => {
 											></Checkbox>
 
 											<img
-												src={imag}
+												src={order?.image}
 												style={{
 													width: "77px",
 													height: "79px",
 													objectFit: "cover",
+													marginLeft: "10px",
 												}}
 											/>
 											<div

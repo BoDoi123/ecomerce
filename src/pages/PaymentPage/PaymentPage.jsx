@@ -21,6 +21,8 @@ import * as UserService from "../../services/UserService";
 import * as OrderService from "../../services/OrderService";
 import * as message from "../../components/Message/Message";
 import { useMutationHook } from "../../hooks/useMutationHook";
+import { useNavigate } from "react-router-dom";
+import { removeAllOrderProduct } from "../../redux/slides/orderSlide";
 
 const PaymentPage = ({ count = 1 }) => {
 	const order = useSelector((state) => {
@@ -41,6 +43,7 @@ const PaymentPage = ({ count = 1 }) => {
 	});
 	const [form] = Form.useForm();
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (isOpenModalUpdateInfo) {
@@ -107,7 +110,21 @@ const PaymentPage = ({ count = 1 }) => {
 
 	useEffect(() => {
 		if (dataOrder?.status === "OK") {
+			const arrayOrdered = [];
+			order?.orderItemsSelected?.forEach((element) => {
+				arrayOrdered.push(element.product);
+			});
+
+			dispatch(removeAllOrderProduct({ listChecked: arrayOrdered }));
 			message.success("Đặt hàng thành công");
+			navigate("/orderSuccess", {
+				state: {
+					delivery,
+					payment,
+					orders: order?.orderItemsSelected,
+					totalPriceMemo: totalPriceMemo,
+				},
+			});
 		} else if (dataOrder?.status === "ERR") {
 			message.error("Có lỗi xảy ra");
 		}
@@ -223,7 +240,7 @@ const PaymentPage = ({ count = 1 }) => {
 						<WrapperLeft>
 							<WrapperInfo>
 								<div>
-									<Label>Chọn phương thức thanh toán</Label>
+									<Label>Chọn phương thức giao hàng</Label>
 
 									<WrapperRadio
 										onChange={handleDelivery}

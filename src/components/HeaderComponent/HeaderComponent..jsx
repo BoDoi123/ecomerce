@@ -25,6 +25,7 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 	const dispatch = useDispatch();
 	const [userName, setUserName] = useState("");
 	const [userAvatar, setUserAvatar] = useState("");
+	const [isOpenPopup, setIsOpenPopup] = useState(false);
 	const [search, setSearch] = useState("");
 	const order = useSelector((state) => state.order);
 	const user = useSelector((state) => state.user);
@@ -52,21 +53,43 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
 	const content = (
 		<div>
-			<WrapperContentPopup onClick={() => navigate("/profile-user")}>
+			<WrapperContentPopup onClick={() => handleClickNavigate("profile")}>
 				Thông tin người dùng
 			</WrapperContentPopup>
 
 			{user?.isAdmin && (
-				<WrapperContentPopup onClick={() => navigate("/system/admin")}>
+				<WrapperContentPopup
+					onClick={() => handleClickNavigate("admin")}
+				>
 					Quản lý hệ thống
 				</WrapperContentPopup>
 			)}
 
-			<WrapperContentPopup onClick={handleLogout}>
+			<WrapperContentPopup
+				onClick={() => handleClickNavigate("my-order")}
+			>
+				Đơn hàng của tôi
+			</WrapperContentPopup>
+
+			<WrapperContentPopup onClick={() => handleClickNavigate()}>
 				Đăng xuất
 			</WrapperContentPopup>
 		</div>
 	);
+
+	const handleClickNavigate = (type) => {
+		if (type === "profile") {
+			navigate("/profile-user");
+		} else if (type === "admin") {
+			navigate("/system/admin");
+		} else if (type === "my-order") {
+			navigate("/my-order");
+		} else {
+			handleLogout();
+		}
+
+		setIsOpenPopup(false);
+	};
 
 	const onSearch = (e) => {
 		setSearch(e.target.value);
@@ -132,12 +155,19 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 
 							{user?.access_token ? (
 								<>
-									<Popover content={content} trigger="click">
+									<Popover
+										content={content}
+										trigger="click"
+										open={isOpenPopup}
+									>
 										<div
 											style={{
 												cursor: "pointer",
 												fontSize: "1.4rem",
 											}}
+											onClick={() =>
+												setIsOpenPopup((prev) => !prev)
+											}
 										>
 											{userName}
 										</div>
