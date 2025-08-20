@@ -117,15 +117,6 @@ const MyOrder = () => {
 						>
 							Giá tiền: {convertPrice(order?.price)}
 						</span>
-						<span
-							style={{
-								fontSize: "1.5rem",
-								color: "#242424",
-								marginLeft: "auto",
-							}}
-						>
-							Phí ship: {convertPrice(data?.shippingPrice)}
-						</span>
 					</div>
 				</WrapperHeaderItem>
 			);
@@ -205,26 +196,43 @@ const MyOrder = () => {
 									{renderProduct(order?.orderItems, order)}
 
 									<WrapperFooterItem>
-										<div>
+										<div
+											style={{
+												display: "flex",
+												flexDirection: "column",
+												gap: "8px",
+											}}
+										>
 											<span
 												style={{
-													color: "rgb(255, 66, 78)",
-													fontSize: "1.6rem",
+													fontSize: "1.7rem",
+													color: "rgb(56, 56, 61)",
 												}}
 											>
-												Tổng tiền:{" "}
+												Phí ship:{" "}
+												{convertPrice(
+													order?.shippingPrice
+												)}
 											</span>
 
 											<span
 												style={{
-													fontSize: "1.8rem",
-													color: "rgb(56, 56, 61)",
-													fontWeight: "700",
+													color: "rgb(255, 66, 78)",
+													fontSize: "1.7rem",
 												}}
 											>
-												{convertPrice(
-													order?.totalPrice
-												)}
+												Tổng tiền:{" "}
+												<span
+													style={{
+														fontSize: "1.8rem",
+														color: "rgb(56, 56, 61)",
+														fontWeight: "700",
+													}}
+												>
+													{convertPrice(
+														order?.totalPrice
+													)}
+												</span>
 											</span>
 										</div>
 

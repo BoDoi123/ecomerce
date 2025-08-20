@@ -38,10 +38,10 @@ const OrderDetail = () => {
 					<div
 						style={{
 							fontSize: "1.5rem",
-							width: "260px",
+							width: "360px",
 							overflow: "hidden",
 							textOverflow: "ellipsis",
-							whiteSpace: "nowrap",
+							whiteSpace: "wrap",
 							marginLeft: "10px",
 						}}
 					>
@@ -60,17 +60,16 @@ const OrderDetail = () => {
 					<span style={{ fontSize: "1.6rem" }}>
 						Giá tiền: {convertPrice(order?.price)}
 					</span>
-					<span style={{ fontSize: "1.6rem" }}>
-						Phí ship: {convertPrice(state?.order?.shippingPrice)}
-					</span>
+
 					<span
 						style={{
-							color: "rgb(255, 66, 78)",
 							fontSize: "1.6rem",
-							fontWeight: "500",
 						}}
 					>
-						Số lượng: {order?.amount}
+						Số lượng:{" "}
+						<span style={{ fontWeight: "600" }}>
+							{order?.amount}
+						</span>
 					</span>
 				</div>
 			</WrapperItemOrder>
@@ -188,8 +187,15 @@ const OrderDetail = () => {
 								style={{
 									textAlign: "right",
 									marginRight: "20px",
+									display: "flex",
+									flexDirection: "column",
+									gap: "8px",
 								}}
 							>
+								<span style={{ fontSize: "1.6rem" }}>
+									Phí ship:{" "}
+									{convertPrice(state?.order?.shippingPrice)}
+								</span>
 								<span
 									style={{
 										color: "red",
@@ -198,7 +204,14 @@ const OrderDetail = () => {
 									}}
 								>
 									Tổng tiền:{" "}
-									{convertPrice(state?.order?.totalPrice)}
+									<span
+										style={{
+											color: "#000",
+											fontWeight: "600",
+										}}
+									>
+										{convertPrice(state?.order?.totalPrice)}
+									</span>
 								</span>
 							</div>
 						</WrapperContainer>

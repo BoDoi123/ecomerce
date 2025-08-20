@@ -16,6 +16,7 @@ import { WrapperItemOrderInfo } from "./style";
 const OrderSuccess = () => {
 	const location = useLocation();
 	const { state } = location;
+	console.log(state);
 
 	return (
 		<div style={{ background: "#f5f5fa", width: "100%", height: "100vh" }}>
@@ -103,6 +104,7 @@ const OrderSuccess = () => {
 														textOverflow:
 															"ellipsis",
 														whiteSpace: "nowrap",
+														marginLeft: "12px",
 													}}
 												>
 													{order?.name}
@@ -128,6 +130,20 @@ const OrderSuccess = () => {
 														Giá tiền:{" "}
 														{convertPrice(
 															order?.price
+														)}
+													</span>
+												</span>
+
+												<span>
+													<span
+														style={{
+															color: "#242424",
+															fontSize: "1.6rem",
+														}}
+													>
+														Phí ship:{" "}
+														{convertPrice(
+															state?.shippingPrice
 														)}
 													</span>
 												</span>

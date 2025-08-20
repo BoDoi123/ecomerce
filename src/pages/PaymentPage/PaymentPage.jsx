@@ -123,6 +123,7 @@ const PaymentPage = () => {
 					payment,
 					orders: order?.orderItemsSelected,
 					totalPriceMemo: totalPriceMemo,
+					shippingPrice: deliveryPriceMemo,
 				},
 			});
 		} else if (dataOrder?.status === "ERR") {
