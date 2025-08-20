@@ -51,3 +51,13 @@ export const renderOptions = (arr) => {
 
 	return result;
 };
+
+export const convertPrice = (price) => {
+	try {
+		const result = price?.toLocaleString().replace(",", ".");
+
+		return `${result} VND`;
+	} catch (error) {
+		return null;
+	}
+};

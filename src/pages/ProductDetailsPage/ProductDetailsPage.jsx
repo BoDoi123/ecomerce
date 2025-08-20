@@ -18,7 +18,7 @@ const ProductDetailPage = () => {
 					style={{
 						fontSize: "1.4rem",
 						fontWeight: "500",
-						margin: "0",
+						marginTop: "0",
 					}}
 				>
 					<span

@@ -47,6 +47,21 @@ const AdminUser = () => {
 	});
 	const { data: dataUpdated, isPending: isLoadingUpdated } = mutationUpdated;
 
+	const onUpdateUser = () => {
+		mutationUpdated.mutate(
+			{
+				id: rowSelected,
+				access_token: user?.access_token,
+				stateUserDetails,
+			},
+			{
+				onSettled: () => {
+					queryUser.refetch();
+				},
+			}
+		);
+	};
+
 	const mutationDeleted = useMutationHook(async (data) => {
 		const { id, access_token } = data;
 		const res = await UserService.deleteUser({
@@ -56,6 +71,20 @@ const AdminUser = () => {
 		return res;
 	});
 	const { data: dataDeleted, isPending: isLoadingDeleted } = mutationDeleted;
+
+	const handleDeleteUser = () => {
+		mutationDeleted.mutate(
+			{
+				id: rowSelected,
+				access_token: user?.access_token,
+			},
+			{
+				onSettled: () => {
+					queryUser.refetch();
+				},
+			}
+		);
+	};
 
 	const mutationDeletedMany = useMutationHook(async (data) => {
 		const { ids, access_token } = data;
@@ -67,6 +96,20 @@ const AdminUser = () => {
 	});
 	const { data: dataDeletedMany, isPending: isLoadingDeletedMany } =
 		mutationDeletedMany;
+
+	const handleDeleteManyUsers = (_ids) => {
+		mutationDeletedMany.mutate(
+			{
+				ids: _ids,
+				access_token: user?.access_token,
+			},
+			{
+				onSettled: () => {
+					queryUser.refetch();
+				},
+			}
+		);
+	};
 
 	useEffect(() => {
 		if (dataDeleted?.status === "OK") {
@@ -97,20 +140,6 @@ const AdminUser = () => {
 
 	const handleCancelDelete = () => {
 		setIsModalOpenDelete(false);
-	};
-
-	const handleDeleteUser = () => {
-		mutationDeleted.mutate(
-			{
-				id: rowSelected,
-				access_token: user?.access_token,
-			},
-			{
-				onSettled: () => {
-					queryUser.refetch();
-				},
-			}
-		);
 	};
 
 	const handleCloseDrawer = () => {
@@ -296,6 +325,12 @@ const AdminUser = () => {
 			...getColumnSearchProps("email"),
 		},
 		{
+			title: "Address",
+			dataIndex: "address",
+			sorter: (a, b) => a.address.length - b.address.length,
+			...getColumnSearchProps("address"),
+		},
+		{
 			title: "Admin",
 			dataIndex: "isAdmin",
 			filters: [
@@ -322,12 +357,7 @@ const AdminUser = () => {
 			sorter: (a, b) => a.phone - b.phone,
 			...getColumnSearchProps("phone"),
 		},
-		{
-			title: "Address",
-			dataIndex: "emaddress",
-			sorter: (a, b) => a.address.length - b.address.length,
-			...getColumnSearchProps("address"),
-		},
+
 		{
 			title: "Action",
 			dataIndex: "action",
@@ -362,35 +392,6 @@ const AdminUser = () => {
 			...stateUserDetails,
 			avatar: file.preview,
 		});
-	};
-
-	const onUpdateUser = () => {
-		mutationUpdated.mutate(
-			{
-				id: rowSelected,
-				access_token: user?.access_token,
-				stateUserDetails,
-			},
-			{
-				onSettled: () => {
-					queryUser.refetch();
-				},
-			}
-		);
-	};
-
-	const handleDeleteManyUsers = (_ids) => {
-		mutationDeletedMany.mutate(
-			{
-				ids: _ids,
-				access_token: user?.access_token,
-			},
-			{
-				onSettled: () => {
-					queryUser.refetch();
-				},
-			}
-		);
 	};
 
 	return (
@@ -441,7 +442,7 @@ const AdminUser = () => {
 							]}
 						>
 							<InputComponent
-								value={stateUserDetails.name}
+								value={stateUserDetails?.name}
 								onChange={handleOnChangeDetails}
 								name="name"
 							/>
@@ -459,7 +460,7 @@ const AdminUser = () => {
 							]}
 						>
 							<InputComponent
-								value={stateUserDetails.type}
+								value={stateUserDetails?.type}
 								onChange={handleOnChangeDetails}
 								name="email"
 							/>
@@ -477,7 +478,7 @@ const AdminUser = () => {
 							]}
 						>
 							<InputComponent
-								value={stateUserDetails.countInStock}
+								value={stateUserDetails?.countInStock}
 								onChange={handleOnChangeDetails}
 								name="phone"
 							/>
@@ -495,7 +496,7 @@ const AdminUser = () => {
 							]}
 						>
 							<InputComponent
-								value={stateUserDetails.address}
+								value={stateUserDetails?.address}
 								onChange={handleOnChangeDetails}
 								name="address"
 							/>

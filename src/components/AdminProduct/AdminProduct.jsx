@@ -38,6 +38,7 @@ const AdminProduct = () => {
 		type: "",
 		countInStock: "",
 		newType: "",
+		discount: "",
 	});
 	const [stateProductDetails, setStateProductDetails] = useState({
 		name: "",
@@ -47,6 +48,7 @@ const AdminProduct = () => {
 		image: "",
 		type: "",
 		countInStock: "",
+		discount: "",
 	});
 	const [form] = Form.useForm();
 
@@ -59,6 +61,7 @@ const AdminProduct = () => {
 			image,
 			type,
 			countInStock: countInStock,
+			discount,
 		} = data;
 		const res = await ProductService.createProduct({
 			name,
@@ -68,6 +71,7 @@ const AdminProduct = () => {
 			image,
 			type,
 			countInStock,
+			discount,
 		});
 		return res;
 	});
@@ -84,6 +88,21 @@ const AdminProduct = () => {
 	});
 	const { data: dataUpdated, isPending: isLoadingUpdated } = mutationUpdated;
 
+	const onUpdateProduct = () => {
+		mutationUpdated.mutate(
+			{
+				id: rowSelected,
+				access_token: user?.access_token,
+				stateProductDetails,
+			},
+			{
+				onSettled: () => {
+					queryProduct.refetch();
+				},
+			}
+		);
+	};
+
 	const mutationDeleted = useMutationHook(async (data) => {
 		const { id, access_token } = data;
 		const res = await ProductService.deleteProduct({
@@ -93,6 +112,20 @@ const AdminProduct = () => {
 		return res;
 	});
 	const { data: dataDeleted, isPending: isLoadingDeleted } = mutationDeleted;
+
+	const handleDeleteProduct = () => {
+		mutationDeleted.mutate(
+			{
+				id: rowSelected,
+				access_token: user?.access_token,
+			},
+			{
+				onSettled: () => {
+					queryProduct.refetch();
+				},
+			}
+		);
+	};
 
 	const mutationDeletedMany = useMutationHook(async (data) => {
 		const { ids, access_token } = data;
@@ -104,6 +137,20 @@ const AdminProduct = () => {
 	});
 	const { data: dataDeletedMany, isPending: isLoadingDeletedMany } =
 		mutationDeletedMany;
+
+	const handleDeleteManyProducts = (_ids) => {
+		mutationDeletedMany.mutate(
+			{
+				ids: _ids,
+				access_token: user?.access_token,
+			},
+			{
+				onSettled: () => {
+					queryProduct.refetch();
+				},
+			}
+		);
+	};
 
 	useEffect(() => {
 		if (data?.status === "OK") {
@@ -145,20 +192,6 @@ const AdminProduct = () => {
 		setIsModalOpenDelete(false);
 	};
 
-	const handleDeleteProduct = () => {
-		mutationDeleted.mutate(
-			{
-				id: rowSelected,
-				access_token: user?.access_token,
-			},
-			{
-				onSettled: () => {
-					queryProduct.refetch();
-				},
-			}
-		);
-	};
-
 	const handleCloseDrawer = () => {
 		setIsOpenDrawer(false);
 		setStateProductDetails({
@@ -191,6 +224,7 @@ const AdminProduct = () => {
 				image: res?.data.image,
 				type: res?.data.type,
 				countInStock: res?.data.countInStock,
+				discount: res?.data?.discount,
 			});
 		}
 
@@ -216,20 +250,6 @@ const AdminProduct = () => {
 
 	const handleDetailsProduct = () => {
 		setIsOpenDrawer(true);
-	};
-
-	const handleDeleteManyProducts = (_ids) => {
-		mutationDeletedMany.mutate(
-			{
-				ids: _ids,
-				access_token: user?.access_token,
-			},
-			{
-				onSettled: () => {
-					queryProduct.refetch();
-				},
-			}
-		);
 	};
 
 	const queryProduct = useQuery({
@@ -429,6 +449,7 @@ const AdminProduct = () => {
 			image: "",
 			type: "",
 			countInStock: "",
+			discount: "",
 		});
 		form.resetFields();
 	};
@@ -445,6 +466,7 @@ const AdminProduct = () => {
 					? stateProduct.newType
 					: stateProduct.type,
 			countInStock: stateProduct.countInStock,
+			discount: stateProduct.discount,
 		};
 
 		mutation.mutate(params, {
@@ -492,21 +514,6 @@ const AdminProduct = () => {
 			...stateProductDetails,
 			image: file.preview,
 		});
-	};
-
-	const onUpdateProduct = () => {
-		mutationUpdated.mutate(
-			{
-				id: rowSelected,
-				access_token: user?.access_token,
-				stateProductDetails,
-			},
-			{
-				onSettled: () => {
-					queryProduct.refetch();
-				},
-			}
-		);
 	};
 
 	const handleChangeSelect = (value) => {
@@ -695,6 +702,25 @@ const AdminProduct = () => {
 							/>
 						</Form.Item>
 
+						{/* Discount */}
+						<Form.Item
+							label="Discount"
+							name="discount"
+							rules={[
+								{
+									required: true,
+									message:
+										"Please input your discount of product!",
+								},
+							]}
+						>
+							<InputComponent
+								value={stateProduct.discount}
+								onChange={handleOnChange}
+								name="discount"
+							/>
+						</Form.Item>
+
 						{/* Image */}
 						<WrapperFormItem
 							label="Image"
@@ -845,6 +871,25 @@ const AdminProduct = () => {
 								value={stateProductDetails.rating}
 								onChange={handleOnChangeDetails}
 								name="rating"
+							/>
+						</Form.Item>
+
+						{/* Discount */}
+						<Form.Item
+							label="Discount"
+							name="discount"
+							rules={[
+								{
+									required: true,
+									message:
+										"Please input your dicsount of product!",
+								},
+							]}
+						>
+							<InputComponent
+								value={stateProductDetails.discount}
+								onChange={handleOnChangeDetails}
+								name="discount"
 							/>
 						</Form.Item>
 

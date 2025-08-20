@@ -8,6 +8,7 @@ import {
 	WrapperStyleTextSell,
 } from "./style";
 import { StarFilled } from "@ant-design/icons";
+import { convertPrice } from "../../utils";
 
 const CardComponent = (props) => {
 	const {
@@ -57,7 +58,7 @@ const CardComponent = (props) => {
 
 			<WrapperPriceText>
 				<span style={{ marginRight: "8px" }}>
-					{price?.toLocaleString()}{" "}
+					{convertPrice(price)}{" "}
 				</span>{" "}
 				<WrapperDiscountText>- {discount || 5}%</WrapperDiscountText>
 			</WrapperPriceText>

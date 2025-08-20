@@ -20,6 +20,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { addOrderProduct } from "../../redux/slides/orderSlide";
+import { convertPrice } from "../../utils";
 
 const ProductDetailsComponent = ({ idProduct }) => {
 	const navigate = useNavigate();
@@ -168,7 +169,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 					<WrapperPriceProduct>
 						<WrapperPriceTextProduct>
-							{productDetails?.price}
+							{convertPrice(productDetails?.price)}
 						</WrapperPriceTextProduct>
 					</WrapperPriceProduct>
 
