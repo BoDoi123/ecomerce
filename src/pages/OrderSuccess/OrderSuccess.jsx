@@ -125,7 +125,8 @@ const OrderSuccess = () => {
 												style={{
 													flex: "1",
 													display: "flex",
-													alignItems: "center",
+													alignItems: "flex-end",
+													flexDirection: "column",
 													gap: "10px",
 												}}
 											>
@@ -161,11 +162,17 @@ const OrderSuccess = () => {
 								})}
 							</WrapperItemOrderInfo>
 
-							<div>
+							<div
+								style={{
+									marginTop: "20px",
+									textAlign: "right",
+									marginRight: "20px",
+								}}
+							>
 								<span
 									style={{
 										color: "red",
-										fontSize: "1.6rem",
+										fontSize: "2rem",
 										fontWeight: "500",
 									}}
 								>

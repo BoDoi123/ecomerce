@@ -68,7 +68,7 @@ export const WrapperItemOrderInfo = styled.div`
 	border-top-right-radius: 6px;
 	border-top-left-radius: 6px;
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
 `;
 
 export const WrapperTotal = styled.div`
