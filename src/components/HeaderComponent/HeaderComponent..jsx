@@ -119,7 +119,14 @@ const HeaderComponent = ({ isHiddenSearch = false, isHiddenCart = false }) => {
 				}}
 			>
 				<Col span={5}>
-					<WrapperTextHeader>LAPTRINHTHATDE</WrapperTextHeader>
+					<WrapperTextHeader
+						onClick={() => {
+							navigate("/");
+						}}
+						style={{ cursor: "pointer" }}
+					>
+						Shopee
+					</WrapperTextHeader>
 				</Col>
 
 				{!isHiddenSearch && (

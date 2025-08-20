@@ -17,7 +17,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const MyOrder = () => {
 	const location = useLocation();
 	const { state } = location;
-    const navigate = useNavigate();
+	const navigate = useNavigate();
 	console.log(location);
 
 	const fetchMyOrder = async () => {
@@ -37,8 +37,8 @@ const MyOrder = () => {
 	const { isLoading, data } = queryOrder;
 
 	const handleDetailsOrder = (id) => {
-        navigate()
-    };
+		navigate();
+	};
 
 	const renderProduct = (data) => {
 		return data?.map((order) => {
@@ -57,11 +57,12 @@ const MyOrder = () => {
 
 					<div
 						style={{
-							width: "260px",
+							width: "500px",
 							overflow: "hidden",
 							textOverflow: "ellipsis",
-							whiteSpace: "nowrap",
+							whiteSpace: "wrap",
 							marginLeft: "10px",
+							fontSize: "1.5rem",
 						}}
 					>
 						{order?.name}
@@ -69,7 +70,7 @@ const MyOrder = () => {
 
 					<span
 						style={{
-							fontSize: "1.3rem",
+							fontSize: "1.5rem",
 							color: "#242424",
 							marginLeft: "auto",
 						}}
@@ -91,7 +92,9 @@ const MyOrder = () => {
 						margin: "0 auto",
 					}}
 				>
-					<h4>Đơn hàng của tôi</h4>
+					<h4 style={{ fontSize: "1.8rem", marginTop: "0" }}>
+						Đơn hàng của tôi
+					</h4>
 
 					<WrapperListOrder>
 						{data?.map((order) => {
@@ -100,14 +103,20 @@ const MyOrder = () => {
 									<WrapperStatus>
 										<span
 											style={{
-												fontSize: "1.4rem",
+												fontSize: "1.6rem",
 												fontWeight: "bold",
+												marginBottom: "4px",
 											}}
 										>
 											Trạng thái
 										</span>
 
-										<div>
+										<div
+											style={{
+												marginBottom: "4px",
+												fontSize: "1.6rem",
+											}}
+										>
 											<span
 												style={{
 													color: "rgb(255, 66, 78)",
@@ -122,7 +131,12 @@ const MyOrder = () => {
 											}`}
 										</div>
 
-										<div>
+										<div
+											style={{
+												marginBottom: "4px",
+												fontSize: "1.6rem",
+											}}
+										>
 											<span
 												style={{
 													color: "rgb(255, 66, 78)",
@@ -145,6 +159,7 @@ const MyOrder = () => {
 											<span
 												style={{
 													color: "rgb(255, 66, 78)",
+													fontSize: "1.6rem",
 												}}
 											>
 												Tổng tiền:{" "}
@@ -152,7 +167,7 @@ const MyOrder = () => {
 
 											<span
 												style={{
-													fontSize: "1.3rem",
+													fontSize: "1.8rem",
 													color: "rgb(56, 56, 61)",
 													fontWeight: "700",
 												}}
@@ -166,7 +181,8 @@ const MyOrder = () => {
 										<div
 											style={{
 												display: "flex",
-												gap: "10px",
+												gap: "12px",
+												justifyContent: "flex-end",
 											}}
 										>
 											<ButtonComponent

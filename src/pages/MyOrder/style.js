@@ -13,11 +13,19 @@ export const WrapperStyleHeader = styled.div`
 	}
 `;
 
-export const WrapperHeaderItem = styled.div``;
+export const WrapperHeaderItem = styled.div`
+	width: 100%;
+	display: flex;
+	margin: 10px 0 10px;
+	align-items: center;
+`;
 
 export const WrapperFooterItem = styled.div`
+	margin-top: 12px;
 	display: flex;
 	flex-direction: column;
+	width: 100%;
+	text-align: right;
 	gap: 10px;
 	border-top: 1px solid rgb(235, 235, 240);
 `;
@@ -33,8 +41,9 @@ export const WrapperStatus = styled.div`
 `;
 
 export const WrapperContainer = styled.div`
-	width: 100%;
-	background-color: #f5f5fa;
+	width: 1270px;
+	height: 100%;
+	margin: 0 auto;
 `;
 
 export const WrapperStyleHeaderDelivery = styled.div`

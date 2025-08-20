@@ -10,7 +10,7 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import Loading from "../../components/LoadingComponent/Loading";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import * as UserService from "../../services/userService";
+import * as UserService from "../../services/UserService";
 import * as message from "../../components/Message/Message";
 import { updateUser } from "../../redux/slides/userSlide";
 import { useMutationHook } from "../../hooks/useMutationHook";

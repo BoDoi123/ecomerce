@@ -106,42 +106,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 					>
 						<WrapperStyleColImage span={4}>
 							<WrapperStyleImageSmall
-								src={imageProductSmall}
-								alt="image small"
-								preview={false}
-							/>
-						</WrapperStyleColImage>
-						<WrapperStyleColImage span={4}>
-							<WrapperStyleImageSmall
-								src={imageProductSmall}
-								alt="image small"
-								preview={false}
-							/>
-						</WrapperStyleColImage>
-						<WrapperStyleColImage span={4}>
-							<WrapperStyleImageSmall
-								src={imageProductSmall}
-								alt="image small"
-								preview={false}
-							/>
-						</WrapperStyleColImage>
-						<WrapperStyleColImage span={4}>
-							<WrapperStyleImageSmall
-								src={imageProductSmall}
-								alt="image small"
-								preview={false}
-							/>
-						</WrapperStyleColImage>
-						<WrapperStyleColImage span={4}>
-							<WrapperStyleImageSmall
-								src={imageProductSmall}
-								alt="image small"
-								preview={false}
-							/>
-						</WrapperStyleColImage>
-						<WrapperStyleColImage span={4}>
-							<WrapperStyleImageSmall
-								src={imageProductSmall}
+								src={productDetails?.image}
 								alt="image small"
 								preview={false}
 							/>
