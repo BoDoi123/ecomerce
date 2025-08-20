@@ -1,7 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as OrderService from "../../services/OrderService";
 import Loading from "../../components/LoadingComponent/Loading";
-import { useSelector } from "react-redux";
 import { convertPrice } from "../../utils";
 import {
 	WrapperItemOrder,

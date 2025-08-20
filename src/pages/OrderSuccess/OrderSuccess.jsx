@@ -4,13 +4,10 @@ import {
 	WrapperInfo,
 	WrapperContainer,
 	WrapperValue,
-	WrapperCountOrder,
 	WrapperItemOrder,
 } from "./style";
-import { DeleteOutlined } from "@ant-design/icons";
 
 import Loading from "../../components/LoadingComponent/Loading";
-import { useDispatch, useSelector } from "react-redux";
 import { convertPrice } from "../../utils";
 import { useLocation } from "react-router-dom";
 import { orderConstant } from "../../constant";

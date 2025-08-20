@@ -24,7 +24,7 @@ import { useMutationHook } from "../../hooks/useMutationHook";
 import { useNavigate } from "react-router-dom";
 import { removeAllOrderProduct } from "../../redux/slides/orderSlide";
 
-const PaymentPage = ({ count = 1 }) => {
+const PaymentPage = () => {
 	const order = useSelector((state) => {
 		return state.order;
 	});
