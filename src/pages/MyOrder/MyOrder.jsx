@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as OrderService from "../../services/OrderService";
 import Loading from "../../components/LoadingComponent/Loading";
 import { useSelector } from "react-redux";
@@ -18,7 +18,6 @@ const MyOrder = () => {
 	const location = useLocation();
 	const { state } = location;
 	const navigate = useNavigate();
-	console.log(location);
 
 	const fetchMyOrder = async () => {
 		const res = await OrderService.getOrderByUserId(
@@ -29,6 +28,20 @@ const MyOrder = () => {
 		return res.data;
 	};
 
+	const mutation = useMutation({
+		mutationFn: (orderDetails) => {
+			return OrderService.deleteOrder(
+				state?.id,
+				state?.access_token,
+				orderDetails
+			);
+		},
+		onSuccess: () => {
+			// Invalidate and refetch the orders
+			queryOrder.refetch();
+		},
+	});
+
 	const queryOrder = useQuery({
 		queryKey: ["order"],
 		queryFn: fetchMyOrder,
@@ -36,8 +49,16 @@ const MyOrder = () => {
 	});
 	const { isLoading, data } = queryOrder;
 
-	const handleDetailsOrder = (id) => {
-		navigate();
+	const handleDeleteOrder = (order) => {
+		mutation.mutate(order);
+	};
+
+	const handleDetailOrder = (order) => {
+		navigate("/order-detail", {
+			state: {
+				order,
+			},
+		});
 	};
 
 	const renderProduct = (data) => {
@@ -66,6 +87,17 @@ const MyOrder = () => {
 						}}
 					>
 						{order?.name}
+						<div style={{ marginTop: "10px" }}>
+							Số lượng:{" "}
+							<span
+								style={{
+									fontWeight: "bold",
+									fontSize: "1.6rem",
+								}}
+							>
+								{order?.amount}
+							</span>
+						</div>
 					</div>
 
 					<span
@@ -186,6 +218,9 @@ const MyOrder = () => {
 											}}
 										>
 											<ButtonComponent
+												onClick={() =>
+													handleDeleteOrder(order)
+												}
 												size={40}
 												styleButton={{
 													height: "36px",
@@ -199,9 +234,7 @@ const MyOrder = () => {
 
 											<ButtonComponent
 												onClick={() =>
-													handleDetailsOrder(
-														order?._id
-													)
+													handleDetailOrder(order)
 												}
 												size={40}
 												styleButton={{

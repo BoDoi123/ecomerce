@@ -1,5 +1,4 @@
-import { Col, Image, InputNumber, Rate, Row } from "antd";
-import imageProductSmall from "../../assets/imgs/img_small.webp";
+import { Col, Image, Rate, Row } from "antd";
 import {
 	WrapperAddressTextProduct,
 	WrapperInputNumber,
@@ -128,7 +127,7 @@ const ProductDetailsComponent = ({ idProduct }) => {
 
 						<WrapperStyleTextSell>
 							{" "}
-							| Đã bán 1000+
+							| Đã bán {productDetails?.sold}+
 						</WrapperStyleTextSell>
 					</div>
 

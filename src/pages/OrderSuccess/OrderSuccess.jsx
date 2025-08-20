@@ -14,20 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { convertPrice } from "../../utils";
 import { useLocation } from "react-router-dom";
 import { orderConstant } from "../../constant";
-import { removeOrderProduct } from "../../redux/slides/orderSlide";
 import { WrapperItemOrderInfo } from "./style";
 
 const OrderSuccess = () => {
-	const order = useSelector((state) => {
-		return state.order;
-	});
-	const dispatch = useDispatch();
 	const location = useLocation();
 	const { state } = location;
-
-	const handleDeleteOrder = (idProduct) => {
-		dispatch(removeOrderProduct({ idProduct }));
-	};
 
 	return (
 		<div style={{ background: "#f5f5fa", width: "100%", height: "100vh" }}>

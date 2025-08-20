@@ -51,10 +51,7 @@ const CardComponent = (props) => {
 						}}
 					/>
 				</span>
-				<WrapperStyleTextSell>
-					{" "}
-					| Đã bán {sold || 1000}+
-				</WrapperStyleTextSell>
+				<WrapperStyleTextSell> | Đã bán {sold}+</WrapperStyleTextSell>
 			</WrapperReportText>
 
 			<WrapperPriceText>
