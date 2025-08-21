@@ -10,7 +10,7 @@ import imageLogo from "../../assets/imgs/logo-login.png";
 import { Image } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as UserService from "../../services/userService";
+import * as UserService from "../../services/UserService";
 import { useMutationHook } from "../../hooks/useMutationHook";
 import Loading from "../../components/LoadingComponent/Loading";
 import * as message from "../../components/Message/Message";
@@ -28,7 +28,7 @@ const SignUpPage = () => {
 
 	useEffect(() => {
 		if (data?.status === "OK") {
-			message.success('Đăng ký thành công');
+			message.success("Đăng ký thành công");
 
 			handleNavigateSignIn();
 		} else if (data?.status === "ERR") {
