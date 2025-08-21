@@ -22,7 +22,11 @@ const ProductDetailPage = () => {
 					}}
 				>
 					<span
-						style={{ cursor: "pointer", fontWeight: "bold" }}
+						style={{
+							cursor: "pointer",
+							fontWeight: "bold",
+							fontSize: "1.8rem",
+						}}
 						onClick={() => navigate("/")}
 					>
 						Trang chủ

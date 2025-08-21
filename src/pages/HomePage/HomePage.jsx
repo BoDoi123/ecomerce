@@ -83,14 +83,17 @@ const HomePage = () => {
 
 			<div
 				className="body"
-				style={{ width: "100%", backgroundColor: "#efefef" }}
+				style={{
+					width: "100%",
+					backgroundColor: "#efefef",
+				}}
 			>
 				<div
 					id="container"
 					style={{
 						margin: "0 auto",
 						width: "1270px",
-						height: "1000px",
+						height: "100%",
 					}}
 				>
 					<SliderComponent
