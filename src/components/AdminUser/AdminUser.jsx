@@ -113,7 +113,7 @@ const AdminUser = () => {
 
 	useEffect(() => {
 		if (dataDeleted?.status === "OK") {
-			message.success();
+			message.success('Xóa thành công');
 			handleCancelDelete();
 		} else if (dataDeleted?.status === "ERR") {
 			message.error();
@@ -122,7 +122,7 @@ const AdminUser = () => {
 
 	useEffect(() => {
 		if (dataUpdated?.status === "OK") {
-			message.success();
+			message.success('Cập nhật thành công');
 			handleCloseDrawer();
 		} else if (dataUpdated?.status === "ERR") {
 			message.error();
@@ -131,7 +131,7 @@ const AdminUser = () => {
 
 	useEffect(() => {
 		if (dataDeletedMany?.status === "OK") {
-			message.success();
+			message.success('Xóa thành công');
 			handleCloseDrawer();
 		} else if (dataDeletedMany?.status === "ERR") {
 			message.error();

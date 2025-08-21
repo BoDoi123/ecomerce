@@ -12,6 +12,8 @@ import {
 } from "./style";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import * as message from "../../components/Message/Message";
 
 const MyOrder = () => {
 	const location = useLocation();
@@ -40,6 +42,15 @@ const MyOrder = () => {
 			queryOrder.refetch();
 		},
 	});
+	const { isPending: isLoadingDelete, data: dataDeleted } = mutation;
+
+	useEffect(() => {
+		if (dataDeleted?.status === "OK") {
+			message.success("Hủy đơn thành công");
+		} else if (dataDeleted?.status === "ERR") {
+			message.error();
+		}
+	}, [isLoadingDelete]);
 
 	const queryOrder = useQuery({
 		queryKey: ["order"],

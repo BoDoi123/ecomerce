@@ -28,7 +28,7 @@ const SignUpPage = () => {
 
 	useEffect(() => {
 		if (data?.status === "OK") {
-			message.success();
+			message.success('Đăng ký thành công');
 
 			handleNavigateSignIn();
 		} else if (data?.status === "ERR") {

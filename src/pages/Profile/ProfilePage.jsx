@@ -31,7 +31,7 @@ const ProfilePage = () => {
 		return res.data;
 	});
 	const dispatch = useDispatch();
-	const { isPending, isSuccess, isError } = mutation;
+	const { isPending, isSuccess, isError, data } = mutation;
 
 	useEffect(() => {
 		setEmail(user?.email);
@@ -42,18 +42,18 @@ const ProfilePage = () => {
 	}, [user]);
 
 	useEffect(() => {
-		if (isSuccess) {
-			message.success();
+		if (data?.status === "OK") {
+			message.success("Cập nhật thành công");
 			dispatch(
 				updateUser({
 					...mutation.data,
 					access_token: user?.access_token,
 				})
 			);
-		} else if (isError) {
+		} else if (data?.status === "ERR") {
 			message.error();
 		}
-	}, [isSuccess, isError]);
+	}, [isPending]);
 
 	const handleOnChangeEmail = (value) => {
 		setEmail(value);
